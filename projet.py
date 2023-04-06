@@ -25,7 +25,7 @@ losc.add_player(Joueur("Jonathan David", 8))
 losc.add_player(Joueur("Burak Yilmaz", 10))
 
 # Création des matchs et du calendrier
-calendrier = ClassChamp.()
+calendrier = ClassChamp.Calendrier()
 calendrier.add_match(Match(psg, om, datetime.date(2023, 4, 8)))
 calendrier.add_match(Match(asm, ol, datetime.date(2023, 4, 9)))
 calendrier.add_match(Match(psg, asm, datetime.date(2023, 4, 15)))
@@ -55,3 +55,17 @@ for match in calendrier.get_journee(3):
 
 # Résultat :
 # Olympique de Marseille 2 - 2 Lille OSC
+
+
+debut_championnat = datetime(2023, 8, 1)
+nb_journees = 38
+journees_par_semaine = 2
+clubs = ["PSG", "OM", "OL", "ASM", "LOSC", "ASSE", "FCN", "RCL", "OGCN", "FCM"]
+calendrier = calendrier(debut_championnat, nb_journees, journees_par_semaine, clubs)
+
+print("Calendrier de la Ligue 1 :")
+for journee in range(1, nb_journees+1):
+    print("Journée {} ({}) :".format(journee, calendrier.get_date_journee(journee)))
+    matchs_journee = calendrier.get_matchs_journee(journee)
+    for match in matchs_journee:
+        print(match)
