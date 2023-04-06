@@ -92,3 +92,8 @@ class TestChampionnat(unittest.TestCase):
     def setUp(self):
         self.championnat = Championnat()
         self.club
+
+
+
+
+
