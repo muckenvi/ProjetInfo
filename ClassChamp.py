@@ -1,7 +1,8 @@
 import numpy as np
 import random
 import unittest
-
+from typing import List
+from datetime import datetime, timedelta
 
 class Club:
     def __init__(self, name, city):
@@ -94,6 +95,34 @@ class TestChampionnat(unittest.TestCase):
         self.club
 
 
+
+
+class Calendrier:
+    def __init__(self, debut: datetime, nb_journees: int, journees_par_semaine: int, clubs: List[str]):
+        self.debut = debut
+        self.nb_journees = nb_journees
+        self.journees_par_semaine = journees_par_semaine
+        self.clubs = clubs
+        self.matchs = {}
+        self.calculer_calendrier()
+
+    def calculer_calendrier(self):
+        for journee in range(1, self.nb_journees+1):
+            journee_date = self.debut + timedelta(days=(journee-1)*7/self.journees_par_semaine)
+            journee_matchs = []
+            for i, club1 in enumerate(self.clubs):
+                for j, club2 in enumerate(self.clubs):
+                    if i < j:
+                        journee_matchs.append((club1, club2))
+            self.matchs[journee] = journee_matchs
+
+    def get_matchs_journee(self, journee: int) -> List[str]:
+        matchs = self.matchs.get(journee, [])
+        return ["{} - {}".format(c1, c2) for c1, c2 in matchs]
+
+    def get_date_journee(self, journee: int) -> str:
+        journee_date = self.debut + timedelta(days=(journee-1)*7/self.journees_par_semaine)
+        return journee_date.strftime("%Y-%m-%d")
 
 
 

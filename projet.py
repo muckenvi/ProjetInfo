@@ -1,4 +1,9 @@
 import ClassChamp
+import datetime
+
+Club= ClassChamp.Club()
+Joueur = ClassChamp.Joueur()
+Match = ClassChamp.Match()
 
 psg = Club("Paris Saint-Germain")
 om = Club("Olympique de Marseille")
@@ -20,7 +25,7 @@ losc.add_player(Joueur("Jonathan David", 8))
 losc.add_player(Joueur("Burak Yilmaz", 10))
 
 # Création des matchs et du calendrier
-calendrier = Calendrier()
+calendrier = ClassChamp.()
 calendrier.add_match(Match(psg, om, datetime.date(2023, 4, 8)))
 calendrier.add_match(Match(asm, ol, datetime.date(2023, 4, 9)))
 calendrier.add_match(Match(psg, asm, datetime.date(2023, 4, 15)))
