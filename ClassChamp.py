@@ -47,12 +47,12 @@ class Match:
         self.away_goals = away_score
 
         if home_score > away_score:
-            self.home.add_points(3)
+            Championnat.clubs[self.home] += 3
         elif home_score < away_score:
-            self.away.add_points(3)
+            Championnat.clubs[self.away] += 3
         else:
-            self.home.add_points(1)
-            self.away.add_points(1)
+            Championnat.clubs[self.away] += 1
+            Championnat.clubs[self.away] += 1
 
     def __str__(self):
         return f"{self.home} {self.home_goals} - {self.away_goals} {self.away}"
@@ -60,16 +60,17 @@ class Match:
 
 class Championnat:
     def __init__(self):
-        self.clubs = []
+        self.clubs = {}
         self.matches = []
 
     def add_club(self, club):
-        self.clubs.append(club)
+        self.clubs.update({club : 0})
 
     def generate_matches(self):
-        for i in range(len(self.clubs)):
-            for j in range(i + 1, len(self.clubs)):
-                match = Match(self.clubs[i], self.clubs[j])
+        c = list(self.clubs)
+        for i in range(len(c)):
+            for j in range(i+1, len(c)):
+                match = Match(c[i], c[j])
                 self.matches.append(match)
 
     def play_matches(self):

@@ -1,15 +1,16 @@
 import ClassChamp
 import datetime
 
-Club= ClassChamp.Club()
-Joueur = ClassChamp.Joueur()
-Match = ClassChamp.Match()
+Club= ClassChamp.Club
+Joueur = ClassChamp.Joueur
+Match = ClassChamp.Match
+Championnat = ClassChamp.Championnat()
 
-psg = Club("Paris Saint-Germain")
-om = Club("Olympique de Marseille")
-asm = Club("AS Monaco")
-ol = Club("Olympique Lyonnais")
-losc = Club("Lille OSC")
+psg = Club("Paris Saint-Germain","Paris")
+om = Club("Olympique de Marseille","Marseille")
+asm = Club("AS Monaco","Monaco")
+ol = Club("Olympique Lyonnais","Lyon")
+losc = Club("Lille OSC","Lyon")
 
 
 # Création des joueurs pour chaque club
@@ -24,44 +25,31 @@ ol.add_player(Joueur("Lucas Paqueta", 6))
 losc.add_player(Joueur("Jonathan David", 8))
 losc.add_player(Joueur("Burak Yilmaz", 10))
 
+
+
+
 # Création des matchs et du calendrier
-calendrier = ClassChamp.Calendrier()
-calendrier.add_match(Match(psg, om, datetime.date(2023, 4, 8)))
-calendrier.add_match(Match(asm, ol, datetime.date(2023, 4, 9)))
-calendrier.add_match(Match(psg, asm, datetime.date(2023, 4, 15)))
-calendrier.add_match(Match(ol, losc, datetime.date(2023, 4, 16)))
-calendrier.add_match(Match(om, losc, datetime.date(2023, 4, 22)))
-
-# Modélisation des confrontations
-for match in calendrier.get_journee(1):
-    resultat = match.jouer_match()
-    print(f"{match.home_team.name} {resultat[0]} - {resultat[1]} {match.away_team.name}")
-
-# Résultat :
-# Paris Saint-Germain 2 - 1 Olympique de Marseille
-# AS Monaco 1 - 0 Olympique Lyonnais
-
-for match in calendrier.get_journee(2):
-    resultat = match.jouer_match()
-    print(f"{match.home_team.name} {resultat[0]} - {resultat[1]} {match.away_team.name}")
-
-# Résultat :
-# Paris Saint-Germain 3 - 2 AS Monaco
-# Olympique Lyonnais 1 - 1 Lille OSC
-
-for match in calendrier.get_journee(3):
-    resultat = match.jouer_match()
-    print(f"{match.home_team.name} {resultat[0]} - {resultat[1]} {match.away_team.name}")
-
-# Résultat :
-# Olympique de Marseille 2 - 2 Lille OSC
 
 
-debut_championnat = datetime(2023, 8, 1)
+
+
+debut_championnat = datetime.date(2023, 8, 6)
 nb_journees = 38
 journees_par_semaine = 2
-clubs = ["PSG", "OM", "OL", "ASM", "LOSC", "ASSE", "FCN", "RCL", "OGCN", "FCM"]
-calendrier = calendrier(debut_championnat, nb_journees, journees_par_semaine, clubs)
+Equipe = ["PSG", "OM", "OL", "ASM", "LOSC", "ASSE", "FCN", "RCL", "OGCN", "FCM"]
+calendrier = ClassChamp.Calendrier(debut_championnat, nb_journees, journees_par_semaine, Equipe)
+calendrier.calculer_calendrier()
+
+
+
+# Modélisation des confrontationsé
+for i in Equipe:
+    Championnat.add_club(i)
+Championnat.generate_matches()
+Championnat.play_matches()
+
+print(Championnat)
+
 
 print("Calendrier de la Ligue 1 :")
 for journee in range(1, nb_journees+1):
