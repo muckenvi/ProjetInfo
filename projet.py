@@ -35,7 +35,7 @@ losc.add_player(Joueur("Burak Yilmaz", 10))
 
 debut_championnat = datetime.date(2023, 8, 6)
 nb_journees = 38
-journees_par_semaine = 2
+journees_par_semaine = 1
 Equipe = ["PSG", "OM", "OL", "ASM", "LOSC", "ASSE", "FCN", "RCL", "OGCN", "FCM"]
 calendrier = ClassChamp.Calendrier(debut_championnat, nb_journees, journees_par_semaine, Equipe)
 calendrier.calculer_calendrier()

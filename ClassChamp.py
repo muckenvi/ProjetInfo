@@ -40,19 +40,20 @@ class Match:
         self.home_goals = home_goals
         self.away_goals = away_goals
 
-    def play_match(self):
+    def play_match(self,championnat):
         home_score = random.randint(0, 5)
         away_score = random.randint(0, 5)
         self.home_goals = home_score
         self.away_goals = away_score
 
         if home_score > away_score:
-            Championnat.clubs[self.home] += 3
+            championnat.clubs[self.home] += 3
         elif home_score < away_score:
-            Championnat.clubs[self.away] += 3
+            championnat.clubs[self.away] += 3
         else:
-            Championnat.clubs[self.away] += 1
-            Championnat.clubs[self.away] += 1
+            championnat.clubs[self.away] += 1
+            championnat.clubs[self.away] += 1
+
 
     def __str__(self):
         return f"{self.home} {self.home_goals} - {self.away_goals} {self.away}"
@@ -75,16 +76,20 @@ class Championnat:
 
     def play_matches(self):
         for match in self.matches:
-            match.play_match()
+            match.play_match(self)
 
     def get_classement(self):
-        return sorted(self.clubs, key=lambda club: (club.points, club.goals_for - club.goals_against), reverse=True)
+        return list(sorted(self.clubs,key=lambda x : x[1],reverse=True))
+
 
     def __str__(self):
         classement = self.get_classement()
         classement_str = ""
-        for i, club in enumerate(classement):
-            classement_str += f"{i + 1}. {club} - {club.points} points\n"
+        j=1
+
+        for club in classement:
+            classement_str += f"{j}. {club} - {self.clubs[club]} points\n"
+            j+= 1
         return classement_str
 
 
