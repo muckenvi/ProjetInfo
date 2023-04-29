@@ -119,6 +119,7 @@ class Calendrier:
                     if i < j:
                         journee_matchs.append((club1, club2))
             self.matchs[journee] = journee_matchs
+    #       matchs est une liste comprenant des listes de tous les matchs des jours
 
     def get_matchs_journee(self, journee: int) -> List[str]:
         matchs = self.matchs.get(journee, [])
