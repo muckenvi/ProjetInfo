@@ -78,18 +78,16 @@ class Championnat:
         for match in self.matches:
             match.play_match(self)
 
-    def get_classement(self):
-        return list(sorted(self.clubs,key=lambda x : x[1],reverse=True))
-
-
     def __str__(self):
-        classement = self.get_classement()
+        classement = []
+        for cle, val in self.clubs.items():
+            classement.append((cle, val))
+        classement = sorted(classement, key=lambda x: x[1], reverse=True)
         classement_str = ""
-        j=1
-
-        for club in classement:
-            classement_str += f"{j}. {club} - {self.clubs[club]} points\n"
-            j+= 1
+        rang = 1
+        for club, points in classement:
+            classement_str += f"{rang}. {club} - {points} points\n"
+            rang += 1
         return classement_str
 
 
