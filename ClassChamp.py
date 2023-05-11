@@ -1,4 +1,4 @@
-import numpy as np
+import numpy
 import random
 import unittest
 from typing import List
@@ -16,21 +16,41 @@ class Club:
     def __str__(self):
         return f"{self.name} ({self.city})"
 
+    def effectif(self):
+        """
+        permet, grace a la lecture d'un fichier texte, d'affecter a chaque equipe l'ensemble de ses joueurs avec
+        leurs caracteristiques en faisant appel a la sous classe Joueur
+        le fichier texte etant de la forme Joueur, Poste
+        """
+        effectifs = open('Joueurs championnat.txt')
+        a = 0
+        for equipes in effectifs:
+            effectif = equipes.strip().split(', ')
+            if a == 1:
+                for i in range(11):
+                    self.joueurs.append(Equipe.Joueur(effectif[2 * i], effectif[2 * i + 1], self.nom))
+                break
+            if effectif[0] == self.nom:
+                a = 1
+
 
 class Joueur:
-    def __init__(self, name, number):
-        self.name = name
+    def __init__(self, name, number):           # On définit les variables d'instances telles que le nom du joueur
+        self.name = name                        # son numéro au club, ainsi que ses stats qui regroupent les buts marqués
+        self.name = name                        # et la note attribuée par les journalistes sur ses performances
         self.number = number
         self.stats = {'but': 0, 'note': 0}
 
-    def add_goal(self):
-        self.stats['but'] += 1
+    def add_goal(self):                     # Fonction qui améliore le compteur de but du joeur
+        self.stats['but'] += 1                      # lorsque ce dernier marque
 
-    def add_note(self, note):
+    def add_note(self, note):               # Même chose pour la note attirbuée
         self.stats['note'] = note
 
-    def __str__(self):
+    def __str__(self):                              # Représentation du joueur sous forme de caractère (Nom + numéro)
         return f"{self.name} ({self.number})"
+
+
 
 
 class Match:
@@ -41,13 +61,13 @@ class Match:
         self.away_goals = away_goals
 
     def play_match(self,championnat):
-        home_score = random.randint(0, 5)
-        away_score = random.randint(0, 5)
+        home_score = random.randint(0, 5)       # Nombre de buts marqués par l'équipe qui joue à domicile (compris entre 0 et 5)
+        away_score = random.randint(0, 5)       # Nombre de buts marqués par l'équipe qui joue à l'extérieur
         self.home_goals = home_score
         self.away_goals = away_score
 
-        if home_score > away_score:
-            championnat.clubs[self.home] += 3
+        if home_score > away_score:                 # Attribution des points en cas de victoire de l'équipe extérieur ou à domicile
+            championnat.clubs[self.home] += 3       # ou en cas de match nul
         elif home_score < away_score:
             championnat.clubs[self.away] += 3
         else:
@@ -67,12 +87,12 @@ class Championnat:
     def add_club(self, club):
         self.clubs.update({club : 0})
 
-    def generate_matches(self):
-        c = list(self.clubs)
-        for i in range(len(c)):
-            for j in range(i+1, len(c)):
+    def generate_matches(self):         # On génère les matchs pour faire en sorte que chaque équipe rencontre deux fois
+        c = list(self.clubs)            # exactement les autres équipes du championnat (ext + domi)
+        for i in range(len(c)):         # On réalise donc une double boucle for pour faire cela en tenant compte des indices
+            for j in range(i+1, len(c)):    # Pour éviter d'avoir des doublons
                 match = Match(c[i], c[j])
-                self.matches.append(match)
+                self.matches.append(match)      # On ajoute les différents matchs dans la liste définie dans le constructeur
 
     def play_matches(self):
         for match in self.matches:
@@ -111,8 +131,7 @@ class Calendrier:
         self.calculer_calendrier()
 
     def calculer_calendrier(self):
-        for journee in range(1, self.nb_journees+1):
-            journee_date = self.debut + timedelta(days=(journee-1)*7/self.journees_par_semaine)
+        for journee in range(1, self.nb_journees+1):        # On détermine tous les matchs pour chacunes des journées
             journee_matchs = []
             for i, club1 in enumerate(self.clubs):
                 for j, club2 in enumerate(self.clubs):

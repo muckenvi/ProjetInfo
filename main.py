@@ -6,6 +6,7 @@ class TestChampionnat(unittest.TestCase):
 
     def setUp(self):
         # Création de deux clubs avec des joueurs
+        # on prend ici le cas n=4 pour simplifier les tests
         self.club1 = Club("Paris Saint-Germain")
         self.club2 = Club("Olympique de Marseille")
         self.joueur1 = Joueur("Neymar", 10)
@@ -18,7 +19,8 @@ class TestChampionnat(unittest.TestCase):
         self.club2.add_player(self.joueur4)
 
     def test_nombre_de_points(self):
-        # Vérification que le nombre de points distribué lors d'une journée est compris entre 2 et 3 fois le nombre de matchs
+        # Vérification que le nombre de points distribué lors d'une journée
+        # est compris entre 2 et 3 fois le nombre de matchs
         calendrier = Calendrier([self.club1, self.club2])
         journee = calendrier.()
         nb_matchs = len(journee)
@@ -35,7 +37,8 @@ class TestChampionnat(unittest.TestCase):
         self.assertEqual(nb_matchs, nb_clubs // 2)
 
     def test_resultat_match(self):
-        # Vérification qu'un club gagne si le nombre de buts marqués est supérieur à celui de son adversaire
+        # Vérification qu'un club gagne si le nombre
+        # de buts marqués est supérieur à celui de son adversaire
         match = Match(self.club1, self.club2)
         self.joueur1.add_goal(2)
         self.joueur2.add_goal(1)
