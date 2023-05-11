@@ -1,0 +1,59 @@
+AC Ajaccio
+Benjamin Leroy, Gardien, Ismael Diallo, Defenseur, Mickael Alphonse, Defenseur, Oumar Gonzalez, Defenseur, Cedric Avinel, Defenseur, Riad Nouri, Milieu, Mathieu Coutadeur, Milieu, Thomas Mangani, Milieu, Mounaim El Idrissy, Attaquant, Romain Hamouma, Attaquant, Yoann Touzghar, Attaquant
+
+SCO Angers
+Paul Bernardoni, Gardien, Yan Valery, Defenseur, Ousmane Camara, Defenseur, Abdoul Bamba, Defenseur, Cedric Hountondji, Defenseur, Himad Abdelli, Milieu, Batista Mendy, Milieu, Adrien Hunou, Milieu, Jean Bahoya, Attaquant, Ibrahima Niane, Attaquant, Sada Thioub, Attaquant
+
+AJ Auxerre
+Ionut Radu, Gardien, Jubal Jr, Defenseur, Julian Jeanvier, Defenseur, Isaak Toure, Defenseur, Denys Bain, Defenseur, Youssouf MChangama, Milieu, Gaetan Perrin, Milieu, Gidean Mensah, Milieu, MBaye Niang, Attaquant, Nuno da Costa, Attaquant, Lassine Sinayoko, Attaquant
+
+Stade Brestois 29
+Marco Bizot, Gardien, Jean Kevin Duverne, Defenseur, Lilian Brassier, Defenseur, Brendan Chardonnet, Defenseur, Kenny Lala, Defenseur, Hugo Magnetti, Milieu, Franck Honorat, Milieu, Jeremy Le Douaron, Milieu, Steve Mounie, Attaquant, Karamoko Dembele, Attaquant, Pierre Lees Melou, Attaquant
+
+Clermont Foot 63
+Mory Diaw, Gardien, Neto Borges, Defenseur, Mateusz Wieteska, Defenseur, Maximiliano Caufriez, Defenseur, Alidu Seidu, Defenseur, Yohann Magnin, Milieu, Maxime Gonalons, Milieu, Jim Allevinah, Milieu, Muhammed Cham, Attaquant, Komnen Andric, Attaquant, Grejohn Kyei, Attaquant
+
+RC Lens
+Brice Samba, Gardien, Kevin Danso, Defenseur, Jonathan Gradit, Defenseur, Facundo Medina, Defenseur, Deiver Machado, Defenseur, Salis Abdul Samed, Milieu, Seko Fofana, Milieu, Przemyslaw Frankowski, Milieu, Angelo Fulgini, Attaquant, Florian Sotoca, Attaquant, Adrien Thomasson, Attaquant
+
+Lille OSC
+Lucas Chevalier, Gardien, Tiago Djalo, Defenseur, Jose Fonte, Defenseur, Ismaily, Defenseur, Bafode Diakite, Defenseur, Remy Cabella, Milieu, Angel Gomes, Milieu, Timothy Weah, Milieu, Jonathan David, Attaquant, Mohamed Bayo, Attaquant, Alan Virginius, Attaquant
+
+FC Lorient
+Vito Mannone, Gardien, Montassar Talbi, Defenseur, Bamo Meite, Defenseur, Gedeon Kalulu, Defenseur, Darlin Yongwa, Defenseur, Enzo Le Fee, Milieu, Jean Victor Makengo, Milieu, Julien Ponceau, Milieu, Ibrahima Kone, Attaquant, Cheikh Bamba Dieng, Attaquant, Sirine Doucoure, Attaquant
+
+Olympique Lyonnais
+Anthony Lopes, Gardien, Sinaly Diomande, Defenseur, Dejan Lovren, Defenseur, Castello Lukeba, Defenseur, Jerome Boateng, Defenseur, Maxence Caqueret, Milieu, Corentin Tolisso, Milieu, Houssem Aouar, Milieu, Ryan Cherki, Attaquant, Alexandre Lacazette, Attaquant, Bradley Barcola, Attaquant
+
+Olympique de Marseille
+Pau Lopez, Gardien, Leonardo Balerdi, Defenseur, Eric Bailly, Defenseur, Chancel Mbemba, Defenseur, Samuel Gigot, Defenseur, Matteo Gendouzi, Milieu, Jordan Veretout, Milieu, Valentin Rongier, Milieu, Amine Harit, Attaquant, Ruslan Malinovskyi, Attaquant, Vitinha, Attaquant
+
+AS Monaco
+Alexander Nubel, Gardien, Vanderson, Defenseur, Guillermo Maripan, Defenseur, Axel Disasi, Defenseur, Malang Sarr, Defenseur, Youssouf Fofana, Milieu, Caio Henrique, Milieu, Aleksandr Golovin, Milieu, Wissam Ben Yedder, Attaquant, Breel Embolo, Attaquant, Eliesse Ben Seghir, Attaquant
+
+Montpellier HSC
+Benjamin Lecomte, Gardien, Issiage Sylla, Defenseur, Christopher Julien, Defenseur, Maxime Esteve, Defenseur, Falaye Sacko, Defenseur, Teji Savanier, Milieu, Jordan Ferri, Milieu, Joris Chotard, Milieu, Wahbi Khazri, Attaquant, Valere Germain, Attaquant, Elye Wahi, Attaquant
+
+FC Nantes
+Alban Lafont, Gardien, Fabien Centonze, Defenseur, Andrei Girotto, Defenseur, Jean-Charles Castelletto, Defenseur, Jaouen Hadjam, Defenseur, Samuel Moutoussamy, Milieu, Pedro Chirivella, Milieu, Florent Mollet, Milieu, Ludovic Blas, Attaquant, Ignatius Ganago, Attaquant, Andy Delort, Attaquant
+
+OGC Nice
+Kasper Schmeichel, Gardien, Dante, Defenseur, Jean Clair Todibo, Defenseur, Melvin Bard, Defenseur, Youcef Atal, Defenseur, Pablo Rosario, Milieu, Khephren Thuram, Milieu, Ross Barkley, Milieu, Aaron Ramsey, Attaquant, Terem Moffi, Attaquant, Sofiane Diop, Attaquant
+
+Paris Saint-Germain
+Gianluigi Donnarumma, Gardien, Sergio Ramos, Defenseur, Nunos Mendes, Defenseur, Marquinhos, Defenseur, Achraf Hakimi, Defenseur, Marco Verratti, Milieu, Fabian Ruiz, Milieu, Warren Zaire Emery, Milieu, Lionel Messi, Attaquant, Kylian Mbappe, Attaquant, Neymar, Attaquant
+
+Stade de Reims
+Yehvann Diouf, Gardien, Yunis Abdelhamid, Defenseur, Emmanuel Agbadou, Defenseur, Thomas Foket, Defenseur, Maxime Busi, Defenseur, Jens Cajuste, Milieu, Marshall Munetsi, Milieu, Dion Lopy, Milieu, Florian Balogun, Attaquant, Alexis Flips, Attaquant, Arber Zeneli, Attaquant
+
+Stade Rennais FC
+Steve Mandada, Gardien, Adrien Truffert, Defenseur, Birger Meling, Defenseur, Hamari Traore, Defenseur, Arthur Theate, Defenseur, Benjamin Bourigeaud, Milieu, Flavien Tait, Milieu, Jeremy Doku, Milieu, Martin Terrier, Attaquant, Karl Toko Ekambi, Attaquant, Amine Gouiri, Attaquant
+
+RC Strasbourg Alsace
+Matz Sels, Gardien, Lucas Perrin, Defenseur, Maxime Le Marchand, Defenseur, Gerzino Nyamsi, Defenseur, Ismael Doukoure, Defenseur, Jean Eudes Ahoulou, Milieu, Sanjin Prcic, Milieu, Alexander Djiku, Milieu, Dimitri Lienard, Attaquant, Kevin Gameiro, Attaquant, Habib Diallo, Attaquant
+
+Toulouse FC
+Maxime Dupe, Gardien, Rasmus Nicolaisen, Defenseur, Anthony Rouault, Defenseur, Gabriel Suazo, Defenseur, Mikkel Desler, Defenseur, Branco Van Den Boomen, Milieu, Brecht Dejaegere, Milieu, Stijn Spierings, Milieu, Rafael Ratao, Attaquant, Thijs Dallinga, Attaquant, Zakaria Aboukhlal, Attaquant
+
+ES Troyes AC
+Gauthier Gallon, Gardien, Jackson Porozo, Defenseur, Yoann Salmier, Defenseur, Adil Rami, Defenseur, Thierno Balde, Defenseur, Rony Lopes, Milieu, Xavier Chavalerin, Milieu, Wilson Odobert, Milieu, Mama Balde, Attaquant, Ike Ugbo, Attaquant, Renaud Ripart, Attaquant
