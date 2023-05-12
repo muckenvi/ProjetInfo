@@ -6,9 +6,8 @@ from typing import List
 from datetime import datetime, timedelta
 
 class Club():
-    def __init__(self, name, city):
+    def __init__(self, name):
         self.name = name
-        self.city = city
         self.players = []
 
 
@@ -18,8 +17,7 @@ class Club():
 
 
     def __str__(self):
-        return f"{self.name} {self.city}"
-        effectifs.close()
+        return f"{self.name}"
 
 
 class Joueur():
@@ -94,15 +92,14 @@ class Championnat():
         a = 0
         for equipes in effectifs:
             effectif = equipes.strip().split(', ')
-            if a%3==0:
+            if a%3==1:
                 for i in range(11):
                     Club(name).add_player(Joueur(effectif[2 * i], effectif[2 * i + 1]))
-                break
-            elif a%3==1:
+                self.clubs.update({name : 0})
+            elif a%3==0:
                 name=effectif[0]
                 Club(name)
             a+=1
-
         effectifs.close()
 
     def __str__(self):
@@ -128,59 +125,99 @@ class TestChampionnat(unittest.TestCase):
 
 
 
-class Calendrier:
-    def __init__(self, debut: datetime, nb_journees: int, journees_par_semaine: int, clubs: List[str]):
+class Calendrier():
+    def __init__(self, debut: datetime, nb_journees: int, journees_par_semaine: int, clubs: List[str], championnat):
         self.debut = debut
         self.nb_journees = nb_journees
         self.journees_par_semaine = journees_par_semaine
         self.clubs = clubs
-        self.matchs = {}
+        self.matchs_par_jour = {}
+        self.championnat = championnat
         self.calculer_calendrier()
 
-    def repartir_matchs(self):
+    def calculer_calendrier(self):
+
         """
         Répartit les matchs d'un championnat sur un nombre donné de jours.
 
         Arguments :
-        matchs -- une liste de matchs, chaque match étant représenté par un tuple de deux équipes.
+        matchs -- une liste de matchs triée, chaque match étant représenté par un tuple de deux équipes.
         nb_jours -- le nombre de jours sur lesquels répartir les matchs.
 
         Renvoie :
         Un dictionnaire associant à chaque jour un ensemble de matchs.
         """
-        nb_matchs = len(Championnat().matches)
+        nb_matchs = len(self.championnat.matches)
         nb_matchs_par_jour = math.ceil(nb_matchs / self.nb_journees)
-        matchs_par_jour = {}
-        jour_actuel = 1
         equipes_jouees = set()
-        for i, match in enumerate(Championnat().matches):
-            if i % nb_matchs_par_jour == 0:
-                jour_actuel += 1
-                equipes_jouees.clear()
-            if jour_actuel not in matchs_par_jour:
-                matchs_par_jour[jour_actuel] = set()
-            equipe1, equipe2 = match
-            if equipe1 not in equipes_jouees and equipe2 not in equipes_jouees:
-                matchs_par_jour[jour_actuel].add(match)
-                equipes_jouees.add(equipe1)
-                equipes_jouees.add(equipe2)
-            else:
+        jour_actuel = 0
+        for i, match in enumerate(self.championnat.matches):
+            equipe1, equipe2 = match.home, match.away
+            if equipe1 in equipes_jouees or equipe2 in equipes_jouees:
                 # On essaie de placer le match sur un jour suivant où les deux équipes ne jouent pas
                 for j in range(jour_actuel + 1, self.nb_journees + 1):
-                    if j not in matchs_par_jour:
-                        matchs_par_jour[j] = set()
-                    if equipe1 not in equipes_jouees and equipe2 not in equipes_jouees:
-                        matchs_par_jour[j].add(match)
+                    if j not in self.matchs_par_jour:
+                        self.matchs_par_jour[j] = set()
+                    if len(self.matchs_par_jour[j]) < nb_matchs_par_jour and equipe1 not in equipes_jouees and equipe2 not in equipes_jouees:
+                        self.matchs_par_jour[j].add(match)
                         equipes_jouees.add(equipe1)
                         equipes_jouees.add(equipe2)
                         jour_actuel = j
                         break
-        # matchs_par_jour est une liste des matchs par jour
+            else:
+                if jour_actuel not in self.matchs_par_jour:
+                    self.matchs_par_jour[jour_actuel] = set()
+                self.matchs_par_jour[jour_actuel].add(match)
+                equipes_jouees.add(equipe1)
+                equipes_jouees.add(equipe2)
+                if len(self.matchs_par_jour[jour_actuel]) == nb_matchs_par_jour:
+                    jour_actuel += 1
+                    equipes_jouees.clear()
+
+        # """
+        # Répartit les matchs d'un championnat sur un nombre donné de jours.
+        #
+        # Arguments :
+        # matchs -- une liste de matchs, chaque match étant représenté par un tuple de deux équipes.
+        # nb_jours -- le nombre de jours sur lesquels répartir les matchs.
+        #
+        # Renvoie :
+        # Un dictionnaire associant à chaque jour un ensemble de matchs.
+        # """
+        # nb_matchs = len(self.championnat.matches)
+        # nb_matchs_par_jour = math.ceil(nb_matchs / self.nb_journees)
+        # jour_actuel = 0
+        # equipes_jouees = set()
+        # for i, match in enumerate(self.championnat.matches):
+        #     if i % nb_matchs_par_jour == 0:
+        #         jour_actuel += 1
+        #         equipes_jouees.clear()
+        #     if jour_actuel not in self.matchs_par_jour:
+        #         self.matchs_par_jour[jour_actuel] = set()
+        #     equipe1, equipe2 = match.home, match.away
+        #     if equipe1 not in equipes_jouees and equipe2 not in equipes_jouees:
+        #         self.matchs_par_jour[jour_actuel].add(match)
+        #         equipes_jouees.add(equipe1)
+        #         equipes_jouees.add(equipe2)
+        #     else:
+        #         # On essaie de placer le match sur un jour suivant où les deux équipes ne jouent pas
+        #         for j in range(jour_actuel + 1, self.nb_journees + 1):
+        #             if j not in self.matchs_par_jour:
+        #                 self.matchs_par_jour[j] = set()
+        #                 if equipe1 not in equipes_jouees and equipe2 not in equipes_jouees:
+        #                     self.matchs_par_jour[j].add(match)
+        #                     equipes_jouees.add(equipe1)
+        #                     equipes_jouees.add(equipe2)
+        #                     jour_actuel = j
+        #                     break
+        # # self.matchs_par_jour est une liste des matchs par jour
 
 
     def get_matchs_journee(self, journee: int) -> List[str]:
-        matchs = self.matchs.get(journee, [])
-        return ["{} - {}".format(c1, c2) for c1, c2 in matchs]
+        matchs = self.matchs_par_jour[journee]
+        print(self.matchs_par_jour[3])
+        for match in matchs:
+            print("{} - {}".format(match.home, match.away))
 
     def get_date_journee(self, journee: int) -> str:
         journee_date = self.debut + timedelta(days=(journee-1)*7/self.journees_par_semaine)
