@@ -4,17 +4,18 @@ import unittest
 from typing import List
 from datetime import datetime, timedelta
 
-class Club:
-    def __init__(self, name, city):
+class Club():
+    def __init__(self, name, city,poste):
         self.name = name
         self.city = city
+        self.poste = poste
         self.players = []
 
     def add_player(self, player):
         self.players.append(player)
 
     def __str__(self):
-        return f"{self.name} ({self.city})"
+        return f"{self.name} {self.city} {self.poste}"
 
     def effectif(self):
         """
@@ -28,14 +29,14 @@ class Club:
             effectif = equipes.strip().split(', ')
             if a == 1:
                 for i in range(11):
-                    self.joueurs.append(Equipe.Joueur(effectif[2 * i], effectif[2 * i + 1], self.nom))
+                    self.players.append(effectif[2 * i], effectif[2 * i + 1], self.name)
                 break
-            if effectif[0] == self.nom:
+            if effectif[0] == self.name:
                 a = 1
         effectifs.close()
 
 
-class Joueur:
+class Joueur():
     def __init__(self, name, number):           # On définit les variables d'instances telles que le nom du joueur
         self.name = name                        # son numéro au club, ainsi que ses stats qui regroupent les buts marqués
         self.name = name                        # et la note attribuée par les journalistes sur ses performances
@@ -49,7 +50,7 @@ class Joueur:
         self.stats['note'] = note
 
     def __str__(self):                              # Représentation du joueur sous forme de caractère (Nom + numéro)
-        return f"{self.name} ({self.number})"
+        return f"{self.name} {self.number} "
 
 
 
