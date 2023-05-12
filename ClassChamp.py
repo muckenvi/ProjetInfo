@@ -1,6 +1,7 @@
 import numpy
 import random
 import unittest
+import math
 from typing import List
 from datetime import datetime, timedelta
 
@@ -136,15 +137,46 @@ class Calendrier:
         self.matchs = {}
         self.calculer_calendrier()
 
-    def calculer_calendrier(self):
-        for journee in range(1, self.nb_journees+1):        # On détermine tous les matchs pour chacunes des journées
-            journee_matchs = []
-            for i, club1 in enumerate(self.clubs):
-                for j, club2 in enumerate(self.clubs):
-                    if i < j:
-                        journee_matchs.append((club1, club2))
-            self.matchs[journee] = journee_matchs
-    #       matchs est une liste comprenant des listes de tous les matchs des jours
+    def repartir_matchs(self):
+        """
+        Répartit les matchs d'un championnat sur un nombre donné de jours.
+
+        Arguments :
+        matchs -- une liste de matchs, chaque match étant représenté par un tuple de deux équipes.
+        nb_jours -- le nombre de jours sur lesquels répartir les matchs.
+
+        Renvoie :
+        Un dictionnaire associant à chaque jour un ensemble de matchs.
+        """
+        nb_matchs = len(Championnat().matches)
+        nb_matchs_par_jour = math.ceil(nb_matchs / self.nb_journees)
+        matchs_par_jour = {}
+        jour_actuel = 1
+        equipes_jouees = set()
+        for i, match in enumerate(Championnat().matches):
+            if i % nb_matchs_par_jour == 0:
+                jour_actuel += 1
+                equipes_jouees.clear()
+            if jour_actuel not in matchs_par_jour:
+                matchs_par_jour[jour_actuel] = set()
+            equipe1, equipe2 = match
+            if equipe1 not in equipes_jouees and equipe2 not in equipes_jouees:
+                matchs_par_jour[jour_actuel].add(match)
+                equipes_jouees.add(equipe1)
+                equipes_jouees.add(equipe2)
+            else:
+                # On essaie de placer le match sur un jour suivant où les deux équipes ne jouent pas
+                for j in range(jour_actuel + 1, self.nb_journees + 1):
+                    if j not in matchs_par_jour:
+                        matchs_par_jour[j] = set()
+                    if equipe1 not in equipes_jouees and equipe2 not in equipes_jouees:
+                        matchs_par_jour[j].add(match)
+                        equipes_jouees.add(equipe1)
+                        equipes_jouees.add(equipe2)
+                        jour_actuel = j
+                        break
+        # matchs_par_jour est une liste des matchs par jour
+
 
     def get_matchs_journee(self, journee: int) -> List[str]:
         matchs = self.matchs.get(journee, [])
