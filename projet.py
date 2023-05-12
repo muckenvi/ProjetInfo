@@ -10,7 +10,7 @@ Match = ClassChamp.Match
 Championnat = ClassChamp.Championnat()
 
 # Création des clubs
-
+''''
 
 Ajaccio=Club('AC Ajaccio','Ajaccio')
 Ajaccio.effectif()
@@ -58,17 +58,6 @@ Clubs = [Ajaccio, Angers, Auxerre, Brest, Clermont, Lens, Lille, Lorient, Lyon, 
            Monaco, Montpellier, Nantes, Nice, Paris, Reims, Rennes, Strasbourg, Toulouse, Troyes]
 
 '''
-# Création des joueurs pour chaque club
-psg.add_player(Joueur("Kylian Mbappé", 10))
-psg.add_player(Joueur("Neymar", 9))
-om.add_player(Joueur("Dimitri Payet", 6))
-om.add_player(Joueur("Florian Thauvin", 7))
-asm.add_player(Joueur("Wissam Ben Yedder", 8))
-asm.add_player(Joueur("Kevin Volland", 7))
-ol.add_player(Joueur("Memphis Depay", 11))
-ol.add_player(Joueur("Lucas Paqueta", 6))
-losc.add_player(Joueur("Jonathan David", 8))
-losc.add_player(Joueur("Burak Yilmaz", 10))'''
 
 
 
@@ -87,8 +76,8 @@ calendrier.calculer_calendrier()
 
 
 # Modélisation des confrontations
-for i in Club:                        # On créer le championnat à l'aide de la liste Club et des class
-    Championnat.add_club(i)             # créées dans le fichier ClassChamp
+                       # On créer le championnat à l'aide de la liste Club et des class
+Championnat.effectif()            # créées dans le fichier ClassChamp
 Championnat.generate_matches()          # On génère chacun des matchs entre ces différentes équipes
 Championnat.play_matches()              # On modélise le résultat de chacun de ces matchs
 
