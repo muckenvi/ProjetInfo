@@ -1,6 +1,6 @@
 import ClassChamp
 import datetime
-import numpy as np
+
 
 
 Club= ClassChamp.Club
@@ -84,3 +84,5 @@ print("Calendrier de la Ligue 1 :")         #Affichage du détail des différent
 for journee in range(1, nb_journees+1):         # les matchs et les dates associées
     print("Journée {} ({}) :".format(journee, calendrier.get_date_journee(journee)))
     calendrier.get_matchs_journee(journee)
+
+print(Championnat.graphique_buts)

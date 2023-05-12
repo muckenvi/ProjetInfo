@@ -1,19 +1,33 @@
-import numpy
+
 import random
 import unittest
 import math
 from typing import List
 from datetime import datetime, timedelta
+import pickle
 
 class Club():
     def __init__(self, name):
         self.name = name
         self.players = []
 
-
-
     def add_player(self,player):
         self.players.append(player)
+
+
+
+    def buts_marques(self,championnat, club):
+        """Retourne le nombre de buts marqués par le club au cours du championnat"""
+        buts = 0
+        for match in championnat:
+            if match.home == club:
+                buts += match.home_goals
+            elif match.away == club:
+                buts += match.away_goals
+        return buts
+
+
+
 
 
     def __str__(self):
@@ -62,6 +76,33 @@ class Match():
             championnat.clubs[self.away] += 1
 
 
+    def attributionNote(self):
+        for joueur in self.home.joueurs:
+            note_min = 4
+            note_max = 7
+            if self.home_goals > self.away_goals:
+                note_min += 1
+                note_max += 1
+            elif self.home_goals < self.away_goals:
+                note_min -= 1
+                note_max -= 1
+            if Joueur.poste == 'Gardien' or Joueur.poste == 'Defenseur':
+                if self.away_goals >= 3:
+                    note_min -= 1
+                    note_max -= 1
+                elif self.away_goals <= 1:
+                    note_min += 1
+                    note_max += 1
+            elif joueur.poste == 'Milieu' or joueur.poste == 'Attaquant':
+                if self.home_goals >= 3:
+                    note_min += 1
+                    note_max += 1
+                elif self.home_goals <= 1:
+                    note_min -= 1
+                    note_max -= 1
+
+
+
     def __str__(self):
         return f"{self.home} {self.home_goals} - {self.away_goals} {self.away}"
 
@@ -81,6 +122,9 @@ class Championnat():
     def play_matches(self):
         for match in self.matches:
             match.play_match(self)
+
+
+
 
     def effectif(self):
         """
@@ -114,6 +158,23 @@ class Championnat():
             rang += 1
         return classement_str
 
+    def sauvegarder(self, fichier):
+        with open(fichier, 'wb') as f:
+            pickle.dump(self, f)
+
+    @staticmethod
+    def charger(fichier):
+        with open(fichier, 'rb') as f:
+            return pickle.load(f)
+
+    def graphique_buts(self):
+        clubs = [club.name for club in self.clubs]
+        buts = [club.buts_marques for club in self.clubs]
+
+        fig, ax = plt.subplots()
+        ax.bar(clubs, buts)
+        ax.set_xlabel("Club")
+        ax.set_ylabel("Buts")
 
 
 
