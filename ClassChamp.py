@@ -32,6 +32,7 @@ class Club:
                 break
             if effectif[0] == self.nom:
                 a = 1
+        effectifs.close()
 
 
 class Joueur:
