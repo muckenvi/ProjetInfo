@@ -5,43 +5,29 @@ from typing import List
 from datetime import datetime, timedelta
 
 class Club():
-    def __init__(self, name, city,poste):
+    def __init__(self, name, city):
         self.name = name
         self.city = city
-        self.poste = poste
         self.players = []
 
-    def add_player(self, player):
+
+
+    def add_player(self,player):
         self.players.append(player)
 
-    def __str__(self):
-        return f"{self.name} {self.city} {self.poste}"
 
-    def effectif(self):
-        """
-        permet, grace a la lecture d'un fichier texte, d'affecter a chaque equipe l'ensemble de ses joueurs avec
-        leurs caracteristiques en faisant appel a la sous classe Joueur
-        le fichier texte etant de la forme Joueur, Poste
-        """
-        effectifs = open('Joueurs championnat.txt')
-        a = 0
-        for equipes in effectifs:
-            effectif = equipes.strip().split(', ')
-            if a == 1:
-                for i in range(11):
-                    self.players.append(effectif[2 * i], effectif[2 * i + 1], self.name)
-                break
-            if effectif[0] == self.name:
-                a = 1
+    def __str__(self):
+        return f"{self.name} {self.city}"
         effectifs.close()
 
 
 class Joueur():
-    def __init__(self, name, number):           # On définit les variables d'instances telles que le nom du joueur
-        self.name = name                        # son numéro au club, ainsi que ses stats qui regroupent les buts marqués
-        self.name = name                        # et la note attribuée par les journalistes sur ses performances
-        self.number = number
+    def __init__(self, name,poste):           # On définit les variables d'instances telles que le nom du joueur
+        self.name = name
+        self.poste = poste                               # son numéro au club, ainsi que ses stats qui regroupent les buts marqués                     # et la note attribuée par les journalistes sur ses performances
         self.stats = {'but': 0, 'note': 0}
+
+
 
     def add_goal(self):                     # Fonction qui améliore le compteur de but du joeur
         self.stats['but'] += 1                      # lorsque ce dernier marque
@@ -50,12 +36,12 @@ class Joueur():
         self.stats['note'] = note
 
     def __str__(self):                              # Représentation du joueur sous forme de caractère (Nom + numéro)
-        return f"{self.name} {self.number} "
+        return f"{self.name}  poste:{self.poste} stats : {self.stats}"
 
 
 
 
-class Match:
+class Match():
     def __init__(self, home, away, home_goals=0, away_goals=0):
         self.home = home
         self.away = away
@@ -73,7 +59,7 @@ class Match:
         elif home_score < away_score:
             championnat.clubs[self.away] += 3
         else:
-            championnat.clubs[self.away] += 1
+            championnat.clubs[self.home] += 1
             championnat.clubs[self.away] += 1
 
 
@@ -81,13 +67,10 @@ class Match:
         return f"{self.home} {self.home_goals} - {self.away_goals} {self.away}"
 
 
-class Championnat:
+class Championnat():
     def __init__(self):
         self.clubs = {}
         self.matches = []
-
-    def add_club(self, club):
-        self.clubs.update({club : 0})
 
     def generate_matches(self):         # On génère les matchs pour faire en sorte que chaque équipe rencontre deux fois
         c = list(self.clubs)            # exactement les autres équipes du championnat (ext + domi)
@@ -99,6 +82,27 @@ class Championnat:
     def play_matches(self):
         for match in self.matches:
             match.play_match(self)
+
+    def effectif(self):
+        """
+        permet, grace a la lecture d'un fichier texte, d'affecter a chaque equipe l'ensemble de ses joueurs avec
+        leurs caracteristiques en faisant appel a la sous classe Joueur
+        le fichier texte etant de la forme Joueur, Poste
+        """
+        effectifs = open('Joueurs championnat.txt')
+        a = 0
+        for equipes in effectifs:
+            effectif = equipes.strip().split(', ')
+            if a%3==0:
+                for i in range(11):
+                    Club(name).add_player(Joueur(effectif[2 * i], effectif[2 * i + 1]))
+                break
+            elif a%3==1:
+                name=effectif[0]
+                Club(name)
+            a+=1
+
+        effectifs.close()
 
     def __str__(self):
         classement = []

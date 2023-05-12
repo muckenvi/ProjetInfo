@@ -10,11 +10,7 @@ Match = ClassChamp.Match
 Championnat = ClassChamp.Championnat()
 
 # Création des clubs
-psg = Club("Paris Saint-Germain","Paris")
-om = Club("Olympique de Marseille","Marseille")
-asm = Club("AS Monaco","Monaco")
-ol = Club("Olympique Lyonnais","Lyon")
-losc = Club("Lille OSC","Lyon")
+
 
 Ajaccio=Club('AC Ajaccio','Ajaccio')
 Ajaccio.effectif()
@@ -61,7 +57,7 @@ Troyes.effectif()
 Clubs = [Ajaccio, Angers, Auxerre, Brest, Clermont, Lens, Lille, Lorient, Lyon, Marseille,
            Monaco, Montpellier, Nantes, Nice, Paris, Reims, Rennes, Strasbourg, Toulouse, Troyes]
 
-
+'''
 # Création des joueurs pour chaque club
 psg.add_player(Joueur("Kylian Mbappé", 10))
 psg.add_player(Joueur("Neymar", 9))
@@ -72,7 +68,7 @@ asm.add_player(Joueur("Kevin Volland", 7))
 ol.add_player(Joueur("Memphis Depay", 11))
 ol.add_player(Joueur("Lucas Paqueta", 6))
 losc.add_player(Joueur("Jonathan David", 8))
-losc.add_player(Joueur("Burak Yilmaz", 10))
+losc.add_player(Joueur("Burak Yilmaz", 10))'''
 
 
 
