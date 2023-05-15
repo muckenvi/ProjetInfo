@@ -72,31 +72,103 @@ class Match():
             championnat.clubs[self.home] += 1
             championnat.clubs[self.away] += 1
 
-
     def attributionNote(self):
-        for joueur in self.home.joueurs:
-            note_min = 4
-            note_max = 7
-            if self.home_goals > self.away_goals:
-                note_min += 1
-                note_max += 1
-            elif self.home_goals < self.away_goals:
-                note_min -= 1
-                note_max -= 1
-            if Joueur.poste == 'Gardien' or Joueur.poste == 'Defenseur':
-                if self.away_goals >= 3:
-                    note_min -= 1
-                    note_max -= 1
-                elif self.away_goals <= 1:
+        home_attaquant = [joueur for joueur in self.home.joueur if joueur.poste == 'Attaquant']
+        away_attaquant = [joueur for joueur in self.away.joueur if joueur.poste == 'Attaquant']
+        home_milieu = [joueur for joueur in self.home.joueur if joueur.poste == 'Milieu']
+        away_milieu = [joueur for joueur in self.away.joueur if joueur.poste == 'Milieu']
+        home_defenseur = [joueur for joueur in self.home.joueur if joueur.poste == 'Defenseur']
+        away_defenseur = [joueur for joueur in self.away.joueur if joueur.poste == 'Defenseur']
+        home_gardien = [joueur for joueur in self.home.joueur if joueur.poste == 'Gardien']
+        away_gardien = [joueur for joueur in self.away.joueur if joueur.poste == 'Gardien']
+        note_min = 4
+        note_max = 7
+        for match in championnat.matches:
+            for joueur in self.home.attaquant:
+                if self.home_goals > self.away_goals:
                     note_min += 1
                     note_max += 1
-            elif joueur.poste == 'Milieu' or joueur.poste == 'Attaquant':
-                if self.home_goals >= 3:
-                    note_min += 1
-                    note_max += 1
-                elif self.home_goals <= 1:
+                elif self.home_goals < self.away_goals:
                     note_min -= 1
                     note_max -= 1
+                if Joueur.poste == 'Gardien' or Joueur.poste == 'Defenseur':
+                    if self.away_goals >= 3:
+                        note_min -= 1
+                        note_max -= 1
+                    elif self.away_goals <= 1:
+                        note_min += 1
+                        note_max += 1
+                elif joueur.poste == 'Milieu' or joueur.poste == 'Attaquant':
+                    if self.home_goals >= 3:
+                        note_min += 1
+                        note_max += 1
+                    elif self.home_goals <= 1:
+                        note_min -= 1
+                        note_max -= 1
+                self.home.players.add_note(random.randint(note_min, note_max))
+
+    def attribuer_buteurs(self, championnat):
+        """Attribue aléatoirement aux attaquants de chaque club s'ils ont marqué ou non lors de chaque match"""
+        for match in championnat.matches:
+            home_attaquant = [joueur for joueur in self.home.joueur if joueur.poste == 'Attaquant']
+            away_attaquant = [joueur for joueur in self.away.joueur if joueur.poste == 'Attaquant']
+            home_milieu = [joueur for joueur in self.home.joueur if joueur.poste == 'Milieu']
+            away_milieu = [joueur for joueur in self.away.joueur if joueur.poste == 'Milieu']
+            home_defenseur = [joueur for joueur in self.home.joueur if joueur.poste == 'Defenseur']
+            away_defenseur = [joueur for joueur in self.away.joueur if joueur.poste == 'Defenseur']
+            home_gardien = [joueur for joueur in self.home.joueur if joueur.poste == 'Gardien']
+            away_gardien = [joueur for joueur in self.away.joueur if joueur.poste == 'Gardien']
+
+            # Proba attaquants
+            buts_h = 0
+            buts_a = 0
+
+            while buts_h < self.home_goals:
+                # Proba Attaquant
+                for attaquant in home_attaquant:
+                    if random.random() < 0.7 and buts < self.home_goals:  # Probabilité de marquer un but, ici 0.5 (modifiable selon les besoins)
+                        attaquant.add_goal()
+                        buts_h += 1
+                # Proba Milieu
+                for milieu in home_milieu:
+                    if random.random() < 0.5 and buts < self.home_goals:  # Probabilité de marquer un but, ici 0.5 (modifiable selon les besoins)
+                        milieu.add_goal()
+                        buts_h += 1
+
+                # Proba Defenseur
+
+                for defenseur in home_defenseur:
+                    if random.random() < 0.3 and buts < self.home_goals:  # Probabilité de marquer un but, ici 0.5 (modifiable selon les besoins)
+                        defenseur.add_goal()
+                        buts_h += 1
+
+                # Proba Gardien
+                for gardien in home_gardien:
+                    if random.random() < 0.05:  # Probabilité de marquer un but, ici 0.5 (modifiable selon les besoins)
+                        gardien.add_goal()
+                        buts_h += 1
+
+            while buts_a < self.away_goals:
+
+                for attaquant in away_attaquant:
+                    if random.random() < 0.63:  # Probabilité de marquer un but, ici 0.5 (modifiable selon les besoins)
+                        attaquant.add_goal()
+                        buts_a += 1
+
+                for milieu in away_milieu:
+                    if random.random() < 0.4:  # Probabilité de marquer un but, ici 0.5 (modifiable selon les besoins)
+                        milieu.add_goal()
+                        buts_a += 1
+
+                for defenseur in away_defenseur:
+                    if random.random() < 0.25:  # Probabilité de marquer un but, ici 0.5 (modifiable selon les besoins)
+                        defenseur.add_goal()
+                        buts_a += 1
+
+                for gardien in away_gardien:
+                    if random.random() < 0.025:  # Probabilité de marquer un but, ici 0.5 (modifiable selon les besoins)
+                        gardien.add_goal()
+                        buts_a += 1
 
 
 
