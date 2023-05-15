@@ -1,7 +1,6 @@
 import random
 import unittest
 import math
-import numpy as np
 from typing import List
 from datetime import datetime, timedelta
 import pickle
