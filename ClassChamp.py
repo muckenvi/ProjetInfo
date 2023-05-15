@@ -1,7 +1,7 @@
-
 import random
 import unittest
 import math
+import numpy as np
 from typing import List
 from datetime import datetime, timedelta
 import pickle
@@ -196,8 +196,6 @@ class Championnat():
             match.play_match(self)
 
 
-
-
     def effectif(self):
         """
         permet, grace a la lecture d'un fichier texte, d'affecter a chaque equipe l'ensemble de ses joueurs avec
@@ -356,7 +354,9 @@ class Calendrier():
     def get_matchs_journee(self, journee):
         matchs = self.matchs_par_jour[journee-1]
         for match in matchs:
-            print(Match(match[0], match[1]))
+            for m in self.championnat.matches:
+                if m.home == match[0] and m.away == match[1]:
+                    print(m)
 
     def get_date_journee(self, journee: int) -> str:
         journee_date = self.debut + timedelta(days=(journee-1)*7/self.journees_par_semaine)
