@@ -254,9 +254,9 @@ class Calendrier():
 
         # Répartition initiale des matchs sur les jours
         for i, match in enumerate(matchs):
-            jour = (i+nb_jours) % nb_jours
+            jour = i % nb_jours
             equipes_par_jour[jour].extend(match)
-            self.matchs_par_jour[jour] = [tuple(equipes_par_jour[jour][k:k + 2]) for k in range(0, len(equipes_par_jour[jour]), 2)]
+            self.matchs_par_jour[jour+nb_jours] = [tuple(equipes_par_jour[jour][k:k + 2]) for k in range(0, len(equipes_par_jour[jour]), 2)]
 
         # Répartition équilibrée des matchs pour chaque équipe
         for equipe in range(1, nb_equipes + 1):
