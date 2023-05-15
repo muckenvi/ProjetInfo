@@ -76,13 +76,12 @@ debut_championnat = datetime.date(2023, 8, 6)  # Initialisation du début de cha
 nb_journees = 38
 journees_par_semaine = 1
 calendrier = ClassChamp.Calendrier(debut_championnat, nb_journees, journees_par_semaine, list(Championnat.clubs), Championnat) # Initialisation du calendrier
-print(len(Championnat.matches))
 
 
 
 print("Calendrier de la Ligue 1 :")         #Affichage du détail des différentes journées avec les résultats de tous
 for journee in range(1, nb_journees+1):         # les matchs et les dates associées
-    print("Journée {} ({}) :".format(journee, calendrier.get_date_journee(journee)))
+    print("\nJournée {} ({}) :".format(journee, calendrier.get_date_journee(journee)))
     calendrier.get_matchs_journee(journee)
 
 print(Championnat.graphique_buts)
