@@ -317,7 +317,7 @@ class Calendrier():
                                         break
                         equipes_jouees[equipe_adverse - 1] = True
             self.matchs_par_jour[jour] = matchs_jour
-
+            #fkof
         ## matchs retours
         equipes_par_jour = [[] for _ in range(nb_jours)]
         matchs = []
