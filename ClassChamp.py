@@ -284,7 +284,7 @@ class Calendrier():
     def get_matchs_journee(self, journee):
         matchs = self.matchs_par_jour[journee-1]
         for match in matchs:
-            print("{} - {}".format(match[0], match[1]))
+            print(Match(match[0], match[1]))
 
     def get_date_journee(self, journee: int) -> str:
         journee_date = self.debut + timedelta(days=(journee-1)*7/self.journees_par_semaine)
