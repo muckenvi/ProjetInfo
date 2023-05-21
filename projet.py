@@ -2,7 +2,20 @@ import ClassChamp
 import datetime
 
 
+''' A FAIRE:
+- héritage entre les classes, chiant il va falloir modifier des trucs
+- héritage depuis un type déjà existant, genre List
+- commentaires
+- tests : au moins 4 méthodes avec 2 cas par méthode
 
+- Vérifier que si un club remporte un match, alors il a marqué plus de buts que l’adversaire
+- Vérifier que le nombre de points distribués lors d’une journée est compris entre 2 et 3 fois le nombre de matchs
+- Vérifier que le nombre de matchs joués par journée est égal au nombre de clubs/2
+- Sauvegarde : Votre modèle de championnat devra pouvoir être sauvé et relu depuis un fichier
+- Choix d’une journée particulière : scores, notes des joueurs, etc
+- Choix d’une journée pour le championnat en cours : classement des clubs, nombre de matchs gagnés/nuls/perdus par club, nombre de buts marqués/encaissés par club
+- faire des analyses sur les stats des clubs ou joueurs
+'''
 Club= ClassChamp.Club
 Joueur = ClassChamp.Joueur
 Match = ClassChamp.Match
