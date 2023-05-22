@@ -4,6 +4,7 @@ import math
 from typing import List
 from datetime import datetime, timedelta
 import pickle
+import matplotlib.pyplot as plt
 
 class Club():
     def __init__(self, name):
