@@ -1,22 +1,24 @@
 import sys
-from PyQt5 import QApplication, QMainWindow, QTableWidgetItem
+from PyQt5.Qt import QApplication, QMainWindow, QTableWidgetItem
 from PyQt5.uic import loadUi
+from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QDialog, QApplication
 
-
-class Ligue1Tableau(QMainWindow):
+class Ligue1Tableau(QDialog):
     def __init__(self):
-        super().__init__()
-        loadUi("Joueurs championnat.txt", self)  # Chargement de l'interface utilisateur
-        set.tableWidget.setColumnWidth(0,100) # Initialisation
-        set.tableWidget.setColumnWidth(1, 200)
-        set.tableWidget.setColumnWidth(2, 200)
+        super(Ligue1Tableau,self).__init__()
+        loadUi("ChampionnatLigue1.ui", self)  # Chargement de l'interface utilisateur
+
+        self.tableWidget.setColumnWidth(0, 200) # Initialisation
+        self.tableWidget.setColumnWidth(1, 200)
+        self.tableWidget.setColumnWidth(2, 200)
 
         effectifs= open('Joueurs championnat.txt')
         for equipes in effectifs:
-            effectif = equipes.strip().split(', ')
+            effectifs = equipes.strip().split(', ')
 
         # Remplir la table avec les données
-        self.remplir_table(effectif)
+        self.remplir_table(effectifs)
 
     def remplir_table(self, fichier):
         # Récupérer le nombre de lignes et de colonnes de la table
@@ -36,11 +38,18 @@ class Ligue1Tableau(QMainWindow):
         # Redimensionner automatiquement les colonnes pour ajuster leur contenu
         self.tableWidget.resizeColumnsToContents()
 
+app = QApplication(sys.argv)
+Ligue1= Ligue1Tableau()
+widget = QtWidgets.QStackedWidget()
+widget.addWidget(Ligue1)
+widget.setFixedHeight(850)
+widget.setFixedWidth(1120)
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = Ligue1Tableau()
-    window.show()
+widget.show()
+
+try:
     sys.exit(app.exec_())
+except:
+    print("Exciting")
 
 
