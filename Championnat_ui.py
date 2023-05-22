@@ -40,12 +40,12 @@ except:
     print("Exciting")
 '''
 
-class Ligue1App(QMainWindow):
+class Ligue1(QMainWindow):
     def __init__(self):
         super().__init__()
         loadUi("ChampionnatLigue1.ui", self)  # Chargement de l'interface utilisateur
 
-        self.tableWidget.setColumnWidth(0, 200)  # Initialisation
+        self.tableWidget.setColumnWidth(0, 200)  # Initialisation des colonnes et de leur largeur respective
         self.tableWidget.setColumnWidth(1, 200)
         self.tableWidget.setColumnWidth(2, 200)
 
@@ -56,16 +56,16 @@ class Ligue1App(QMainWindow):
         a = 0
         C=[]
         for equipes in effectifs:
-            effectif = equipes.strip().split(', ')
-            if a % 3 == 0:
+            effectif = equipes.strip().split(', ')      #Ontraite le fichier texte pour avoir une liste uniquement avec les
+            if a % 3 == 0:                              #clubs
                 name = effectif[0]
                 C.append(name)
             a += 1
         print(C)
         effectifs.close()
         # Remplir la table avec les données
-        self.remplir_table(C)
-
+        self.remplir_table(C)                               #on fait appel à notre fonction remplir_table qui permet de rentrer
+                                                            #chaque nom de club dans le tableau sur qt designer
 
         cell1 = QTableWidgetItem(C[0])
         cell2 = QTableWidgetItem(C[1])
@@ -88,8 +88,8 @@ class Ligue1App(QMainWindow):
         cell2.setBackground(QColor("green"))
         cell3.setBackground(QColor("green"))
 
-        cell18.setBackground(QColor("red"))
-        cell19.setBackground(QColor("red"))
+        cell18.setBackground(QColor("red"))                 #permet de colorier en vert, le podium, ainsi qu'en rouge, les 3 derniers
+        cell19.setBackground(QColor("red"))                 #du classement
         cell20.setBackground(QColor("red"))
 
 
@@ -127,8 +127,8 @@ class Ligue1App(QMainWindow):
         row=0
         # Parcourir les données et les insérer dans la table
         for club in fichier:
-            self.tableWidget.setItem(row,1,QTableWidgetItem(club))
-            row+=1
+            self.tableWidget.setItem(row,1,QTableWidgetItem(club))      # on parcours chaque ligne de la table en en sautant une
+            row+=1                                                         #à chaque fois qu'on rentre un club dans le tableau
 
 
 
@@ -136,7 +136,7 @@ class Ligue1App(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = Ligue1App()
+    window = Ligue1()
     window.show()
     sys.exit(app.exec_())
 
