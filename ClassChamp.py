@@ -4,85 +4,15 @@ import math
 from typing import List
 from datetime import datetime, timedelta
 import pickle
+import matplotlib.pyplot as plt
 
-
-class Championnat():
-    def __init__(self):
-        self.clubs = {}
-        self.matches = []
-
-    def generate_matches(self):         # On génère les matchs pour faire en sorte que chaque équipe rencontre deux fois
-        c = list(self.clubs)            # exactement les autres équipes du championnat (ext + domi)
-        for i in range(len(c)):         # On réalise donc une double boucle for pour faire cela en tenant compte des indices
-            for j in range(i+1, len(c)):    # Pour éviter d'avoir des doublons
-                match_aller = Match(c[i], c[j])
-                self.matches.append(match_aller)      # On ajoute les différents matchs dans la liste définie dans le constructeur
-                match_retour = Match(c[j], c[i])
-                self.matches.append(match_retour)      # On ajoute les différents matchs dans la liste définie dans le constructeur
-
-
-    def play_matches(self):
-        for match in self.matches:
-            match.play_match(self)
-
-
-    def effectif(self):
-        """
-        permet, grace a la lecture d'un fichier texte, d'affecter a chaque equipe l'ensemble de ses joueurs avec
-        leurs caracteristiques en faisant appel a la sous classe Joueur
-        le fichier texte etant de la forme Joueur, Poste
-        """
-        effectifs = open('Joueurs championnat.txt')
-        a = 0
-        for equipes in effectifs:
-            effectif = equipes.strip().split(', ')
-            if a%3==1:
-                for i in range(11):
-                    Club(name).add_player(Joueur(effectif[2 * i], effectif[2 * i + 1]))
-                self.clubs.update({name : 0})
-            elif a%3==0:
-                name=effectif[0]
-                Club(name)
-            a+=1
-        effectifs.close()
-
-    def __str__(self):
-        classement = []
-        for cle, val in self.clubs.items():
-            classement.append((cle, val))
-        classement = sorted(classement, key=lambda x: x[1], reverse=True)
-        classement_str = ""
-        rang = 1
-        for club, points in classement:
-            classement_str += f"{rang}. {club} - {points} points\n"
-            rang += 1
-        return classement_str
-
-    def sauvegarder(self, fichier):
-        with open(fichier, 'wb') as f:
-            pickle.dump(self, f)
-
-    @staticmethod
-    def charger(fichier):
-        with open(fichier, 'rb') as f:
-            return pickle.load(f)
-
-    def graphique_buts(self):
-        clubs = [club.name for club in self.clubs]
-        buts = [club.buts_marques for club in self.clubs]
-
-        fig, ax = plt.subplots()
-        ax.bar(clubs, buts)
-        ax.set_xlabel("Club")
-        ax.set_ylabel("Buts")
-
-
-class Club(List):
+class Club():
     def __init__(self, name):
         self.name = name
+        self.players = []
 
     def add_player(self,player):
-        self.append(player)
+        self.players.append(player)
 
 
 
@@ -117,6 +47,8 @@ class Joueur():
 
     def __str__(self):                              # Représentation du joueur sous forme de caractère (Nom + numéro)
         return f"{self.name}  poste:{self.poste} stats : {self.stats}"
+
+
 
 
 class Match():
@@ -244,6 +176,86 @@ class Match():
         return f"{self.home} {self.home_goals} - {self.away_goals} {self.away}"
 
 
+class Championnat():
+    def __init__(self):
+        self.clubs = {}
+        self.matches = []
+
+    def generate_matches(self):         # On génère les matchs pour faire en sorte que chaque équipe rencontre deux fois
+        c = list(self.clubs)            # exactement les autres équipes du championnat (ext + domi)
+        for i in range(len(c)):         # On réalise donc une double boucle for pour faire cela en tenant compte des indices
+            for j in range(i+1, len(c)):    # Pour éviter d'avoir des doublons
+                match_aller = Match(c[i], c[j])
+                self.matches.append(match_aller)      # On ajoute les différents matchs dans la liste définie dans le constructeur
+                match_retour = Match(c[j], c[i])
+                self.matches.append(match_retour)      # On ajoute les différents matchs dans la liste définie dans le constructeur
+
+
+    def play_matches(self):
+        for match in self.matches:
+            match.play_match(self)
+
+
+    def effectif(self):
+        """
+        permet, grace a la lecture d'un fichier texte, d'affecter a chaque equipe l'ensemble de ses joueurs avec
+        leurs caracteristiques en faisant appel a la sous classe Joueur
+        le fichier texte etant de la forme Joueur, Poste
+        """
+        effectifs = open('Joueurs championnat.txt')
+        a = 0
+        for equipes in effectifs:
+            effectif = equipes.strip().split(', ')
+            if a%3==1:
+                for i in range(11):
+                    Club(name).add_player(Joueur(effectif[2 * i], effectif[2 * i + 1]))
+                self.clubs.update({name : 0})
+            elif a%3==0:
+                name=effectif[0]
+                Club(name)
+            a+=1
+        effectifs.close()
+
+    def __str__(self):
+        classement = []
+        for cle, val in self.clubs.items():
+            classement.append((cle, val))
+        classement = sorted(classement, key=lambda x: x[1], reverse=True)
+        classement_str = ""
+        rang = 1
+        for club, points in classement:
+            classement_str += f"{rang}. {club} - {points} points\n"
+            rang += 1
+        return classement_str
+
+    def sauvegarder(self, fichier):
+        with open(fichier, 'wb') as f:
+            pickle.dump(self, f)
+
+    @staticmethod
+    def charger(fichier):
+        with open(fichier, 'rb') as f:
+            return pickle.load(f)
+
+    def graphique_buts(self):
+        clubs = [club.name for club in self.clubs]
+        buts = [club.buts_marques for club in self.clubs]
+
+        fig, ax = plt.subplots()
+        ax.bar(clubs, buts)
+        ax.set_xlabel("Club")
+        ax.set_ylabel("Buts")
+
+
+
+class TestChampionnat(unittest.TestCase):
+    def setUp(self):
+        self.championnat = Championnat()
+        self.club
+
+
+
+
 class Calendrier():
     def __init__(self, debut: datetime, nb_journees: int, journees_par_semaine: int, clubs: List[str], championnat):
         self.debut = debut
@@ -351,8 +363,4 @@ class Calendrier():
         return journee_date.strftime("%Y-%m-%d")
 
 
-class TestChampionnat(unittest.TestCase):
-    def setUp(self):
-        self.championnat = Championnat()
-        self.club
 

@@ -22,11 +22,12 @@ class TestChampionnat(unittest.TestCase):
         # Vérification que le nombre de points distribué lors d'une journée
         # est compris entre 2 et 3 fois le nombre de matchs
         calendrier = Calendrier([self.club1, self.club2])
-        journee = calendrier.()
+        journee = calendrier.get_matchs_journee()
         nb_matchs = len(journee)
         nb_points = sum([match.get_points() for match in journee])
         self.assertGreaterEqual(nb_points, 2 * nb_matchs)
         self.assertLessEqual(nb_points, 3 * nb_matchs)
+
 
     def test_nombre_de_matchs_par_journee(self):
         # Vérification que le nombre de match par journée ne dépasse pas la moitié du nombre de club

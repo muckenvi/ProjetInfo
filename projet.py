@@ -1,6 +1,6 @@
 import ClassChamp
 import datetime
-
+import matplotlib.pyplot as plt
 
 ''' A FAIRE:
 - héritage entre les classes, chiant il va falloir modifier des trucs
