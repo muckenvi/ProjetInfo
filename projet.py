@@ -29,8 +29,7 @@ Championnat.effectif()                  # importe les clubs et leurs joueurs
 Championnat.generate_matches()          # On génère chacun des matchs entre ces différentes équipes, matchs allés d'abord puis match retours
 Championnat.play_matches()              # On modélise le résultat de chacun de ces matchs et donc du championnat
 
-print(Championnat)                      # On affiche le resultat du championnat après le nombre de journées choisit
-                                        # C'est à dire le classement final
+print(Championnat)                      # On affiche le resultat du championnat après le nombre de journées choisit, c'est à dire le classement final
 
 
 # Création du calendrier

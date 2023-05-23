@@ -14,8 +14,6 @@ class Club():
     def add_player(self,player):
         self.players.append(player)
 
-
-
     def buts_marques(self,championnat, club):
         """Retourne le nombre de buts marqués par le club au cours du championnat"""
         buts = 0
@@ -25,7 +23,6 @@ class Club():
             elif match.away == club:
                 buts += match.away_goals
         return buts
-
 
     def __str__(self):
         return f"{self.name}"
@@ -37,8 +34,6 @@ class Joueur():
         self.poste = poste                               # son numéro au club, ainsi que ses stats qui regroupent les buts marqués                     # et la note attribuée par les journalistes sur ses performances
         self.stats = {'but': 0, 'note': 0}
 
-
-
     def add_goal(self):                     # Fonction qui améliore le compteur de but du joeur
         self.stats['but'] += 1                      # lorsque ce dernier marque
 
@@ -47,8 +42,6 @@ class Joueur():
 
     def __str__(self):                              # Représentation du joueur sous forme de caractère (Nom + numéro)
         return f"{self.name}  poste:{self.poste} stats : {self.stats}"
-
-
 
 
 class Match():
@@ -247,13 +240,10 @@ class Championnat():
         ax.set_ylabel("Buts")
 
 
-
 class TestChampionnat(unittest.TestCase):
     def setUp(self):
         self.championnat = Championnat()
         self.club
-
-
 
 
 class Calendrier():
@@ -363,4 +353,4 @@ class Calendrier():
         return journee_date.strftime("%Y-%m-%d")
 
 
-
+class test_champ(unittest.TestCase):
