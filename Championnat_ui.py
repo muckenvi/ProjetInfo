@@ -45,9 +45,9 @@ class Ligue1(QMainWindow):
         super().__init__()
         loadUi("ChampionnatLigue1.ui", self)  # Chargement de l'interface utilisateur
 
-        self.tableWidget.setColumnWidth(0, 200)  # Initialisation des colonnes et de leur largeur respective
-        self.tableWidget.setColumnWidth(1, 200)
-        self.tableWidget.setColumnWidth(2, 200)
+        self.tableWidget.setColumnWidth(0, 300)  # Initialisation des colonnes et de leur largeur respective
+        self.tableWidget.setColumnWidth(1, 300)
+        self.tableWidget.setColumnWidth(2, 300)
 
         # Exemple de données pour remplir la table
 
