@@ -6,6 +6,8 @@ from PyQt5.QtWidgets import  QApplication,QMainWindow, QTableWidgetItem, QTableW
 from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QPixmap
 import os
+
+from PyQt5.QtCore import Qt
 import ClassChamp,projet
 
 
@@ -27,14 +29,26 @@ class Ligue1(QMainWindow):
 
         effectifs = open('Joueurs championnat.txt')
         self.remplir_table(self.clubs(effectifs))
-        #self.zones(effectifs)
+
         self.insererImage(self.clubs(effectifs))
 
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.resizeRowsToContents()
         self.tableWidget.setColumnCount(8)
         self.tableWidget.setRowCount(20)
+        self.rename_column(3,"Nuls")
+        self.rename_column(4, "Defaites")
+        self.rename_column(5, "Buts marqués")
+        self.rename_column(6, "Buts encaissés")
+        self.rename_column(7, "Différence de buts")
 
+        self.init_table_with_zeros()
+        self.zonesEUROPE()
+        self.zonesDESCENTE()
+
+    def rename_column(self, column_index, new_name):
+        header_item = QTableWidgetItem(new_name)
+        self.tableWidget.setHorizontalHeaderItem(column_index, header_item)
 
     def clubs(self,fichier):
         C=[]
@@ -49,56 +63,51 @@ class Ligue1(QMainWindow):
         fichier.close()
 
         # Remplir la table avec les données
-                                  #on fait appel à notre fonction remplir_table qui permet de rentrer
+
+                             #on fait appel à notre fonction remplir_table qui permet de rentrer
+
+    def init_table_with_zeros(self):
+        rows = self.tableWidget.rowCount()
+        cols = self.tableWidget.columnCount()
+
+        for row in range(rows):
+            for col in range(cols):
+                if col!=0 and col!=1:
+                    item = QTableWidgetItem("0")
+                    item.setTextAlignment(Qt.AlignCenter)
+                    self.tableWidget.setItem(row, col, item)
 
 
-    def zones(self,effectifs):
-        C =self.clubs(effectifs)
-        L=[]
-        for j in range(len(C)):
-            cell = QTableWidgetItem(C[j])
-            L.append(cell)
-
-        for k in range(len(C)):
-            for i in range(2,8):
-                    self.tableWidget.setItem(k,i,QTableWidgetItem("0"))
-
-        for l in range(3):
-            for m in range(8):
-                QTableWidgetItem("0").setBackground(QColor("Green"))
-                L[l].setBackground(QColor("Green"))
-
-
-        for z in range(17,19):
-            L[z].setBackground(QColor("Red"))
-            for n in range(0,7):
-                QTableWidgetItem("0").setBackground(QColor("Red"))
+    def zonesEUROPE(self):
+        """ Permet de colorier la zone des clubs qui jouent les places européennes"""
+        colonne = int(self.tableWidget.columnCount())
+        for col in range(colonne):
+            for l in range(3):
+                if col !=0:
+                    self.tableWidget.item(l,col).setBackground(QColor("Green"))
+            for l in range(3,5):
+                if col !=0:
+                    self.tableWidget.item(l,col).setBackground(QColor("darkGreen"))
 
 
 
-        cell1 = QTableWidgetItem(self.clubs(effectifs)[0])
-        cell2 = QTableWidgetItem(self.clubs(effectifs)[1])
-        cell3 = QTableWidgetItem(self.clubs(effectifs)[2])
-        cell18 = QTableWidgetItem(self.clubs(effectifs)[17])
-        cell19= QTableWidgetItem(self.clubs(effectifs)[18])
-        cell20 = QTableWidgetItem(self.clubs(effectifs)[19])
+    def zonesDESCENTE(self):
+        """Permet de colorier la zone des clubs qui jouent le maintien"""
+
+        colonne = int(self.tableWidget.columnCount())
+        for ligne in range(17,20):
+            for col in range(colonne):
+                if col !=0:
+                    if ligne ==17 :
+                         self.tableWidget.item(ligne,col).setBackground(QColor("darkRed"))
+                    else:
+                        self.tableWidget.item(ligne,col).setBackground(QColor("Red"))
 
 
-        self.tableWidget.setItem(0, 1, cell1)
-        self.tableWidget.setItem(1, 1, cell2)
-        self.tableWidget.setItem(2, 1, cell3)
 
-        self.tableWidget.setItem(17, 1, cell18)
-        self.tableWidget.setItem(18, 1, cell19)
-        self.tableWidget.setItem(19, 1, cell20)
 
-        cell1.setBackground(QColor("green"))
-        cell2.setBackground(QColor("green"))
-        cell3.setBackground(QColor("green"))
 
-        cell18.setBackground(QColor("red"))                 #permet de colorier en vert, le podium, ainsi qu'en rouge, les 3 derniers
-        cell19.setBackground(QColor("red"))                 #du classement
-        cell20.setBackground(QColor("red"))
+
 
 
 
@@ -135,7 +144,9 @@ class Ligue1(QMainWindow):
         row=0
         # Parcourir les données et les insérer dans la table
         for club in fichier:
-            self.tableWidget.setItem(row,1,QTableWidgetItem(club))      # on parcours chaque ligne de la table en en sautant une
+            item=QTableWidgetItem(club)
+            self.tableWidget.setItem(row,1,item)
+            item.setTextAlignment(Qt.AlignCenter)                       # on parcours chaque ligne de la table en en sautant une
             row+=1                                                         #à chaque fois qu'on rentre un club dans le tableau
 
     def Def_image(self, image_path):
