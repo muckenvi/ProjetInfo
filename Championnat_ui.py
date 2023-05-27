@@ -5,67 +5,37 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import  QApplication,QMainWindow, QTableWidgetItem, QTableWidget
 from PyQt5.QtGui import QColor
 
-'''
-class Ligue1Tableau(QDialog):
-    def __init__(self):
-        super(Ligue1Tableau,self).__init__()
-        loadUi("ChampionnatLigue1.ui", self)  # Chargement de l'interface utilisateur
-
-        self.tableWidget.setColumnWidth(0, 200)  # Initialisation
-        self.tableWidget.setColumnWidth(1, 200)
-        self.tableWidget.setColumnWidth(2, 200)
-
-
-        effectifs= open('Joueurs championnat.txt')
-        for equipes in effectifs:
-            effectifs = equipes.strip().split(', ')
-
-        # Remplir la table avec les données
-        self.remplir_table(effectifs)
-
-
-
-
-app = QApplication(sys.argv)
-ligue1tableau = Ligue1Tableau()
-widget = QtWidgets.QStackedWidget()
-widget.addWidget(ligue1tableau)
-widget.setFixedHeight(850)
-widget.setFixedWidth(1120)
-widget.show()
-
-try:
-    sys.exit(app.exec_())
-except:
-    print("Exciting")
-'''
 
 class Ligue1(QMainWindow):
     def __init__(self):
         super().__init__()
-        loadUi("ChampionnatLigue1.ui", self)  # Chargement de l'interface utilisateur
-
-        self.tableWidget.setColumnWidth(0, 300)  # Initialisation des colonnes et de leur largeur respective
-        self.tableWidget.setColumnWidth(1, 300)
-        self.tableWidget.setColumnWidth(2, 300)
+        loadUi("ChampionnatLigue.ui", self)  # Chargement de l'interface utilisateur
+        '''
+        self.tableWidget.setColumnWidth(0, 100)  # Initialisation des colonnes et de leur largeur respective
+        '''
 
         # Exemple de données pour remplir la table
 
         effectifs = open('Joueurs championnat.txt')
+        self.remplir_table(self.clubs(effectifs))
 
-        a = 0
+    def clubs(self,fichier):
         C=[]
-        for equipes in effectifs:
+        a = 0
+        for equipes in fichier:
             effectif = equipes.strip().split(', ')      #Ontraite le fichier texte pour avoir une liste uniquement avec les
             if a % 3 == 0:                              #clubs
                 name = effectif[0]
                 C.append(name)
             a += 1
-        print(C)
-        effectifs.close()
+        return C
+        fichier.close()
+
         # Remplir la table avec les données
-        self.remplir_table(C)                               #on fait appel à notre fonction remplir_table qui permet de rentrer
-                                                            #chaque nom de club dans le tableau sur qt designer
+                                  #on fait appel à notre fonction remplir_table qui permet de rentrer
+
+
+
 
         cell1 = QTableWidgetItem(C[0])
         cell2 = QTableWidgetItem(C[1])
@@ -91,6 +61,7 @@ class Ligue1(QMainWindow):
         cell18.setBackground(QColor("red"))                 #permet de colorier en vert, le podium, ainsi qu'en rouge, les 3 derniers
         cell19.setBackground(QColor("red"))                 #du classement
         cell20.setBackground(QColor("red"))
+
 
 
 
@@ -122,6 +93,7 @@ class Ligue1(QMainWindow):
         num_cols = 3
 
         # Définir le nombre de lignes et de colonnes de la table
+
         self.tableWidget.setRowCount(num_lignes)
         self.tableWidget.setColumnCount(num_cols)
         row=0
