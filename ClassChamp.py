@@ -216,6 +216,14 @@ class Championnat():
             a+=1
         effectifs.close()
 
+
+    def PYQT(self):
+        classement = []
+        for cle, val in self.clubs.items():
+            classement.append((cle, val))
+        classement = sorted(classement, key=lambda x: x[1], reverse=True)
+        return classement
+
     def __str__(self):
         classement = []
         for cle, val in self.clubs.items():
@@ -246,12 +254,6 @@ class Championnat():
         ax.set_xlabel("Club")
         ax.set_ylabel("Buts")
 
-
-
-class TestChampionnat(unittest.TestCase):
-    def setUp(self):
-        self.championnat = Championnat()
-        self.club
 
 
 

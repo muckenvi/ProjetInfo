@@ -8,7 +8,9 @@ from PyQt5.QtGui import QPixmap
 import os
 
 from PyQt5.QtCore import Qt
-import ClassChamp,projet
+
+import ClassChamp,projet, main
+from PyQt5 import QtGui
 
 
 class Ligue1(QMainWindow):
@@ -45,6 +47,36 @@ class Ligue1(QMainWindow):
         self.init_table_with_zeros()
         self.zonesEUROPE()
         self.zonesDESCENTE()
+        self.pushButton.clicked.connect(self.boutonclique)
+
+
+        palette = QtGui.QPalette()
+        pixmap = QtGui.QPixmap("Fond.jpeg")
+        palette.setBrush(QtGui.QPalette.Background,QtGui.QBrush(pixmap))
+        self.setPalette(palette)
+
+
+        '''
+        Championnat = ClassChamp.Championnat()
+        Championnat.effectif()
+        Championnat.generate_matches()
+        Championnat.play_matches()
+        '''
+
+
+
+
+    def boutonclique(self):
+        # Code exécuté lorsque le bouton est cliqué
+        M=[]
+        L = ClassChamp.Championnat.PYQT(self)
+        for i in range(len(L)):
+            M.append(L[i][0])
+        self.DebutChampionnat(M)
+
+        print("Championnat lets go")
+        
+
 
     def rename_column(self, column_index, new_name):
         header_item = QTableWidgetItem(new_name)
@@ -104,33 +136,21 @@ class Ligue1(QMainWindow):
                         self.tableWidget.item(ligne,col).setBackground(QColor("Red"))
 
 
-
-
-
-
-
-
-
-
-    '''
-    def fill_table(self, data):
-        # Récupérer le nombre de lignes et de colonnes de la table
-        num_rows = len(data)
-        num_cols = len(data[0])
-
-        # Définir le nombre de lignes et de colonnes de la table
-        self.tableWidget.setRowCount(num_rows)
-        self.tableWidget.setColumnCount(num_cols)
-
+    def DebutChampionnat(self,M):
+        row=0
         # Parcourir les données et les insérer dans la table
-        for row, row_data in enumerate(data):
-            for col, col_data in enumerate(row_data):
-                item = QTableWidgetItem(str(col_data))
-                self.tableWidget.setItem(row, col, item)
+        for club in M:
+            item=QTableWidgetItem(club)
+            self.tableWidget.setItem(row,1,item)
+            item.setTextAlignment(Qt.AlignCenter)                       # on parcours chaque ligne de la table en en sautant une
+            row+=1
 
-        # Redimensionner automatiquement les colonnes pour ajuster leur contenu
-        self.tableWidget.resizeColumnsToContents()
-    '''
+
+
+
+
+
+
 
     def remplir_table(self, fichier):
         # Récupérer le nombre de lignes et de colonnes de la table

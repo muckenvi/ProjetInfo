@@ -25,7 +25,8 @@ Championnat = ClassChamp.Championnat()
 
 
 # Modélisation des confrontations
-Championnat.effectif()                  # importe les clubs et leurs joueurs
+Championnat.effectif()
+                                        # importe les clubs et leurs joueurs
 Championnat.generate_matches()          # On génère chacun des matchs entre ces différentes équipes, matchs allés d'abord puis match retours
 Championnat.play_matches()              # On modélise le résultat de chacun de ces matchs et donc du championnat
 
