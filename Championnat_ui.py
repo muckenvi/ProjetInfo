@@ -1,7 +1,7 @@
 import sys
 from PyQt5.Qt import QApplication, QMainWindow, QTableWidgetItem
 from PyQt5.uic import loadUi
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import  QApplication,QMainWindow, QTableWidgetItem, QTableWidget
 from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QPixmap
@@ -27,6 +27,7 @@ class Ligue1(QMainWindow):
         for j in range(column_count):
             self.tableWidget.setColumnWidth(j,150)
 
+
         # Exemple de données pour remplir la table
 
         effectifs = open('Joueurs championnat.txt')
@@ -51,10 +52,28 @@ class Ligue1(QMainWindow):
 
 
         palette = QtGui.QPalette()
-        pixmap = QtGui.QPixmap("Fond.jpeg")
-        palette.setBrush(QtGui.QPalette.Background,QtGui.QBrush(pixmap))
+        pixmap = QtGui.QPixmap("stade.jpeg")
+        caled_pixmap = pixmap.scaled(self.size(), QtCore.Qt.IgnoreAspectRatio)
+
+        palette.setBrush(QtGui.QPalette.Background,QtGui.QBrush(caled_pixmap))
         self.setPalette(palette)
 
+
+
+        self.tableWidget.move((self.size().width()- self.tableWidget.width()) / 2, (self.size().height() - self.tableWidget.height()) / 2)
+
+
+
+        self.image_label = QtWidgets.QLabel(self)
+        self.image2_label = QtWidgets.QLabel(self)
+        pixmap2 = QPixmap("logo.png")
+        pixmap2bis = QPixmap("logo.png")
+        self.image_label.setPixmap(pixmap2)
+        self.image2_label.setPixmap(pixmap2bis)
+        self.image_label.setFixedSize(pixmap2.width(), pixmap2.height())
+        self.image2_label.setFixedSize(pixmap2bis.width(), pixmap2bis.height())
+        self.image_label.move(50, 100)
+        self.image2_label.move(1175, 100)
 
         '''
         Championnat = ClassChamp.Championnat()
@@ -69,7 +88,7 @@ class Ligue1(QMainWindow):
     def boutonclique(self):
         # Code exécuté lorsque le bouton est cliqué
         M=[]
-        L = ClassChamp.Championnat.PYQT(self)
+        L = ClassChamp.Championnat.PYQT()
         for i in range(len(L)):
             M.append(L[i][0])
         self.DebutChampionnat(M)
