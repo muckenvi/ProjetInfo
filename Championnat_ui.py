@@ -35,6 +35,7 @@ class Ligue1(QMainWindow):
 
         self.insererImage(self.clubs(effectifs))
 
+
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.resizeRowsToContents()
         self.tableWidget.setColumnCount(8)
@@ -48,7 +49,7 @@ class Ligue1(QMainWindow):
         self.init_table_with_zeros()
         self.zonesEUROPE()
         self.zonesDESCENTE()
-        self.pushButton.clicked.connect(self.boutonclique)
+        self.pushButton.clicked.connect(self.boutonclique())
 
 
         palette = QtGui.QPalette()
@@ -75,12 +76,12 @@ class Ligue1(QMainWindow):
         self.image_label.move(50, 100)
         self.image2_label.move(1175, 100)
 
-        '''
+
         Championnat = ClassChamp.Championnat()
         Championnat.effectif()
         Championnat.generate_matches()
         Championnat.play_matches()
-        '''
+
 
 
 
@@ -88,11 +89,11 @@ class Ligue1(QMainWindow):
     def boutonclique(self):
         # Code exécuté lorsque le bouton est cliqué
         M=[]
-        L = ClassChamp.Championnat.PYQT()
+        L= ClassChamp.Championnat.PYQT(self)
         for i in range(len(L)):
             M.append(L[i][0])
-        self.DebutChampionnat(M)
-
+        #self.DebutChampionnat(M)
+        print(M)
         print("Championnat lets go")
         
 

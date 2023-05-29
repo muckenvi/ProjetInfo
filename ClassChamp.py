@@ -224,6 +224,7 @@ class Championnat():
         classement = sorted(classement, key=lambda x: x[1], reverse=True)
         return classement
 
+
     def __str__(self):
         classement = []
         for cle, val in self.clubs.items():
