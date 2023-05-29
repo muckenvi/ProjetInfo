@@ -216,15 +216,25 @@ class Championnat():
             a+=1
         effectifs.close()
 
-
-    def PYQT(self):
+    def resultat(self):
         classement = []
         for cle, val in self.clubs.items():
             classement.append((cle, val))
         classement = sorted(classement, key=lambda x: x[1], reverse=True)
         return classement
 
+    def __str__(self):
+        classement_str = ""
+        rang = 1
+        classement = self.resultat()
+        for club, points in classement:
+            classement_str += f"{rang}. {club} - {points} points\n"
+            rang += 1
+        return classement_str
 
+
+
+    '''
     def __str__(self):
         classement = []
         for cle, val in self.clubs.items():
@@ -236,6 +246,8 @@ class Championnat():
             classement_str += f"{rang}. {club} - {points} points\n"
             rang += 1
         return classement_str
+        
+    '''
 
     def sauvegarder(self, fichier):
         with open(fichier, 'wb') as f:

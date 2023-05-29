@@ -89,7 +89,7 @@ class Ligue1(QMainWindow):
     def boutonclique(self):
         # Code exécuté lorsque le bouton est cliqué
         M=[]
-        L= ClassChamp.Championnat.PYQT(self)
+        L= ClassChamp.Championnat.resultat(self)
         for i in range(len(L)):
             M.append(L[i][0])
         #self.DebutChampionnat(M)
