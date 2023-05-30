@@ -1,5 +1,5 @@
 import sys
-from PyQt5.Qt import QApplication, QMainWindow, QTableWidgetItem
+
 from PyQt5.uic import loadUi
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import  QApplication,QMainWindow, QTableWidgetItem, QTableWidget
@@ -82,18 +82,18 @@ class Ligue1(QMainWindow):
         self.image2_label.move(1175, 100)
 
 
-
-
     def commande(self):
         # Code exécuté lorsque le bouton est cliqué
         M=[]
         L= projet.Championnat.resultat()
         for i in range(len(L)):
             M.append(L[i][0])
+        self.insererImage2(self.construire_liste_logos(L))
         self.DebutChampionnat(M)
         self.zonesEUROPE()
         self.zonesDESCENTE()
         self.insererImage2(self.construire_liste_logos(L))
+
 
 
 
@@ -234,7 +234,7 @@ class Ligue1(QMainWindow):
         for k in range(len(fichier)):
 
             L.append(self.Def_image(fichier[k]))
-
+        print(L)
         row=0
         for k in range(len(fichier)):
 
