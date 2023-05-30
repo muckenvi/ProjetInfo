@@ -219,6 +219,7 @@ class Championnat():
             self.classement.append((cle, val))
         self.classement = sorted(self.classement, key=lambda x: x[1], reverse=True)
 
+
     def buts_marque(self):
         buts_m = []
         # print(self.clubs)
