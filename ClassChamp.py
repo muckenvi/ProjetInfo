@@ -14,6 +14,8 @@ class Club():
     def add_player(self,player):
         self.players.append(player)
 
+
+
     def buts_marques(self,championnat, club):
         """Retourne le nombre de buts marqués par le club au cours du championnat"""
         buts = 0
@@ -23,6 +25,7 @@ class Club():
             elif match.away == club:
                 buts += match.away_goals
         return buts
+
 
     def __str__(self):
         return f"{self.name}"
@@ -34,6 +37,8 @@ class Joueur():
         self.poste = poste                               # son numéro au club, ainsi que ses stats qui regroupent les buts marqués                     # et la note attribuée par les journalistes sur ses performances
         self.stats = {'but': 0, 'note': 0}
 
+
+
     def add_goal(self):                     # Fonction qui améliore le compteur de but du joeur
         self.stats['but'] += 1                      # lorsque ce dernier marque
 
@@ -42,6 +47,8 @@ class Joueur():
 
     def __str__(self):                              # Représentation du joueur sous forme de caractère (Nom + numéro)
         return f"{self.name}  poste:{self.poste} stats : {self.stats}"
+
+
 
 
 class Match():
@@ -209,6 +216,25 @@ class Championnat():
             a+=1
         effectifs.close()
 
+    def resultat(self):
+        classement = []
+        for cle, val in self.clubs.items():
+            classement.append((cle, val))
+        classement = sorted(classement, key=lambda x: x[1], reverse=True)
+        return classement
+
+    def __str__(self):
+        classement_str = ""
+        rang = 1
+        classement = self.resultat()
+        for club, points in classement:
+            classement_str += f"{rang}. {club} - {points} points\n"
+            rang += 1
+        return classement_str
+
+
+
+    '''
     def __str__(self):
         classement = []
         for cle, val in self.clubs.items():
@@ -220,6 +246,8 @@ class Championnat():
             classement_str += f"{rang}. {club} - {points} points\n"
             rang += 1
         return classement_str
+        
+    '''
 
     def sauvegarder(self, fichier):
         with open(fichier, 'wb') as f:
@@ -240,10 +268,7 @@ class Championnat():
         ax.set_ylabel("Buts")
 
 
-class TestChampionnat(unittest.TestCase):
-    def setUp(self):
-        self.championnat = Championnat()
-        self.club
+
 
 
 class Calendrier():
@@ -353,4 +378,4 @@ class Calendrier():
         return journee_date.strftime("%Y-%m-%d")
 
 
-class test_champ(unittest.TestCase):
+

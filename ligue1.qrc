@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="Ligue1">
+    <file>rcs.png</file>
+  </qresource>
+</RCC>
