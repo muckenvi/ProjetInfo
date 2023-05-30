@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1404</width>
-    <height>624</height>
+    <height>568</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -141,7 +141,7 @@
     </column>
     <column>
      <property name="text">
-      <string>Victoires</string>
+      <string>Points</string>
      </property>
     </column>
     <column>

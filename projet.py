@@ -47,4 +47,3 @@ for journee in range(1, nb_journees+1):
     print("\nJournée {} ({}) :".format(journee, calendrier.get_date_journee(journee)))
     calendrier.get_matchs_journee(journee)
 
-print(Championnat.graphique_buts)
