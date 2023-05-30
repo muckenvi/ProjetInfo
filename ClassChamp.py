@@ -246,7 +246,7 @@ class Championnat():
     def charger(fichier):
         with open(fichier, 'rb') as f:
             return pickle.load(f)
-
+    '''
     def graphique_buts(self):
         clubs = [club.name for club in self.clubs]
         buts = [club.buts_marques for club in self.clubs]
@@ -255,6 +255,8 @@ class Championnat():
         ax.bar(clubs, buts)
         ax.set_xlabel("Club")
         ax.set_ylabel("Buts")
+        
+    '''
 
 
 class Calendrier():

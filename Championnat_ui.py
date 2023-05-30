@@ -9,9 +9,11 @@ import os
 
 from PyQt5.QtCore import Qt
 
-import ClassChamp,projet, main
+import ClassChamp
 from PyQt5 import QtGui
 
+import projet
+from projet import Championnat
 
 class Ligue1(QMainWindow):
     def __init__(self):
@@ -38,22 +40,25 @@ class Ligue1(QMainWindow):
 
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.resizeRowsToContents()
-        self.tableWidget.setColumnCount(8)
+        self.tableWidget.setColumnCount(10)
         self.tableWidget.setRowCount(20)
-        self.rename_column(3,"Nuls")
-        self.rename_column(4, "Defaites")
-        self.rename_column(5, "Buts marqués")
-        self.rename_column(6, "Buts encaissés")
-        self.rename_column(7, "Différence de buts")
+        self.rename_column(3,"Journée")
+        self.rename_column(4, "Victoires")
+        self.rename_column(5, "Nuls")
+        self.rename_column(6, "Défaites")
+        self.rename_column(7, "Buts marqués")
+        self.rename_column(8, "Buts encaissés")
+        self.rename_column(9, "Différence de buts")
 
         self.init_table_with_zeros()
         self.zonesEUROPE()
         self.zonesDESCENTE()
-        self.pushButton.clicked.connect(self.boutonclique())
+        self.pushButton.clicked.connect(self.commande)
+
 
 
         palette = QtGui.QPalette()
-        pixmap = QtGui.QPixmap("stade.jpeg")
+        pixmap = QtGui.QPixmap("stade-de-france.jpg.avif")
         caled_pixmap = pixmap.scaled(self.size(), QtCore.Qt.IgnoreAspectRatio)
 
         palette.setBrush(QtGui.QPalette.Background,QtGui.QBrush(caled_pixmap))
@@ -61,7 +66,7 @@ class Ligue1(QMainWindow):
 
 
 
-        self.tableWidget.move((self.size().width()- self.tableWidget.width()) / 2, (self.size().height() - self.tableWidget.height()) / 2)
+        self.tableWidget.move((self.size().width()- self.tableWidget.width())/2 , (self.size().height() - self.tableWidget.height())/2 )
 
 
 
@@ -77,25 +82,25 @@ class Ligue1(QMainWindow):
         self.image2_label.move(1175, 100)
 
 
-        Championnat = ClassChamp.Championnat()
-        Championnat.effectif()
-        Championnat.generate_matches()
-        Championnat.play_matches()
 
+
+    def commande(self):
+        # Code exécuté lorsque le bouton est cliqué
+        M=[]
+        L= projet.Championnat.resultat()
+        for i in range(len(L)):
+            M.append(L[i][0])
+        self.DebutChampionnat(M)
+        self.zonesEUROPE()
+        self.zonesDESCENTE()
+        self.insererImage2(self.construire_liste_logos(L))
 
 
 
 
     def boutonclique(self):
-        # Code exécuté lorsque le bouton est cliqué
-        M=[]
-        L= ClassChamp.Championnat.resultat(self)
-        for i in range(len(L)):
-            M.append(L[i][0])
-        #self.DebutChampionnat(M)
-        print(M)
-        print("Championnat lets go")
-        
+        self.commande()
+
 
 
     def rename_column(self, column_index, new_name):
@@ -112,7 +117,7 @@ class Ligue1(QMainWindow):
                 C.append(name)
             a += 1
         return C
-        fichier.close()
+
 
         # Remplir la table avec les données
 
@@ -200,6 +205,17 @@ class Ligue1(QMainWindow):
         image.setPixmap(pixmap)
         return image
 
+    def construire_liste_logos(self,effectif):
+        base_url = "./Club."
+
+        liste_logos = []
+
+        for club in effectif:
+            logo_url = base_url + str(club) + ".png"
+            liste_logos.append(logo_url)
+
+        return liste_logos
+
     def insererImage(self,fichier):
         dossier = "./Clubs"
         L=[]
@@ -209,9 +225,21 @@ class Ligue1(QMainWindow):
 
         row=0
         for k in range(len(fichier)+2):
+
             self.tableWidget.setCellWidget(row,0,L[k])
             row+=1
 
+    def insererImage2(self,fichier):
+        L=[]
+        for k in range(len(fichier)):
+
+            L.append(self.Def_image(fichier[k]))
+
+        row=0
+        for k in range(len(fichier)):
+
+            self.tableWidget.setCellWidget(row,0,L[k])
+            row+=1
 
 
 
