@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 import pickle
 import matplotlib.pyplot as plt
 
+
 class Club():
     def __init__(self, name):
         self.name = name
@@ -14,15 +15,13 @@ class Club():
     def add_player(self,player):
         self.players.append(player)
 
-
-
-    def buts_marques(self,championnat, club):
+    def buts_marques(self,championnat):
         """Retourne le nombre de buts marqués par le club au cours du championnat"""
         buts = 0
         for match in championnat.matches:
-            if match.home == club:
+            if match.home == self:
                 buts += match.home_goals
-            elif match.away == club:
+            elif match.away == self:
                 buts += match.away_goals
         return buts
 
@@ -47,8 +46,6 @@ class Joueur():
 
     def __str__(self):                              # Représentation du joueur sous forme de caractère (Nom + numéro)
         return f"{self.name}  poste:{self.poste} stats : {self.stats}"
-
-
 
 
 class Match():
@@ -180,6 +177,7 @@ class Championnat():
     def __init__(self):
         self.clubs = {}
         self.matches = []
+        self.classement = []
 
     def generate_matches(self):         # On génère les matchs pour faire en sorte que chaque équipe rencontre deux fois
         c = list(self.clubs)            # exactement les autres équipes du championnat (ext + domi)
@@ -217,37 +215,27 @@ class Championnat():
         effectifs.close()
 
     def resultat(self):
-        classement = []
         for cle, val in self.clubs.items():
-            classement.append((cle, val))
-        classement = sorted(classement, key=lambda x: x[1], reverse=True)
-        return classement
+            self.classement.append((cle, val))
+        self.classement = sorted(self.classement, key=lambda x: x[1], reverse=True)
+
+    def buts_marque(self):
+        buts_m = []
+        # print(self.clubs)
+        for club, points in self.classement:
+            for c in self.clubs:
+                if c == club:
+                    print(Club(c).players)
+                    buts_m.append(Club(c).buts_marques(self))
+        return buts_m
 
     def __str__(self):
         classement_str = ""
         rang = 1
-        classement = self.resultat()
-        for club, points in classement:
+        for club, points in self.classement:
             classement_str += f"{rang}. {club} - {points} points\n"
             rang += 1
         return classement_str
-
-
-
-    '''
-    def __str__(self):
-        classement = []
-        for cle, val in self.clubs.items():
-            classement.append((cle, val))
-        classement = sorted(classement, key=lambda x: x[1], reverse=True)
-        classement_str = ""
-        rang = 1
-        for club, points in classement:
-            classement_str += f"{rang}. {club} - {points} points\n"
-            rang += 1
-        return classement_str
-        
-    '''
 
     def sauvegarder(self, fichier):
         with open(fichier, 'wb') as f:
@@ -266,9 +254,6 @@ class Championnat():
         ax.bar(clubs, buts)
         ax.set_xlabel("Club")
         ax.set_ylabel("Buts")
-
-
-
 
 
 class Calendrier():
@@ -376,6 +361,3 @@ class Calendrier():
     def get_date_journee(self, journee: int) -> str:
         journee_date = self.debut + timedelta(days=(journee-1)*7/self.journees_par_semaine)
         return journee_date.strftime("%Y-%m-%d")
-
-
-

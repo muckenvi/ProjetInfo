@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 '''
 
 #création des classes contenues dans le fichier ClassChamp.py
-Club= ClassChamp.Club
+Club = ClassChamp.Club
 Joueur = ClassChamp.Joueur
 Match = ClassChamp.Match
 Championnat = ClassChamp.Championnat()
@@ -29,10 +29,11 @@ Championnat.effectif()
                                         # importe les clubs et leurs joueurs
 Championnat.generate_matches()          # On génère chacun des matchs entre ces différentes équipes, matchs allés d'abord puis match retours
 Championnat.play_matches()              # On modélise le résultat de chacun de ces matchs et donc du championnat
+Championnat.resultat()
 
-print(Championnat)                      # On affiche le resultat du championnat après le nombre de journées choisit
-print(Championnat.resultat())                        # C'est à dire le classement final
-
+# print(Championnat)                      # On affiche le resultat du championnat après le nombre de journées choisit
+# print(Championnat.resultat())                        # C'est à dire le classement final
+print(Championnat.buts_marque())
 
 # Création du calendrier
 debut_championnat = datetime.date(2023, 8, 6)  # Initialisation du début de championnat
@@ -42,9 +43,9 @@ calendrier = ClassChamp.Calendrier(debut_championnat, nb_journees, journees_par_
 
 
 
-print("Calendrier de la Ligue 1 :")         #Affichage du détail des différentes journées avec les résultats jours par jours
-for journee in range(1, nb_journees+1):
-    print("\nJournée {} ({}) :".format(journee, calendrier.get_date_journee(journee)))
-    calendrier.get_matchs_journee(journee)
+# print("Calendrier de la Ligue 1 :")         #Affichage du détail des différentes journées avec les résultats jours par jours
+# for journee in range(1, nb_journees+1):
+#     print("\nJournée {} ({}) :".format(journee, calendrier.get_date_journee(journee)))
+#     calendrier.get_matchs_journee(journee)
 
-print(Championnat.graphique_buts)
+# print(Championnat.graphique_buts)
