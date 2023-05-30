@@ -25,6 +25,15 @@ class Club():
                 buts += match.away_goals
         return buts
 
+    def buts_encaisses(self, championnat):
+        """Retourne le nombre de buts encaissés par le club au cours du championnat"""
+        buts = 0
+        for match in championnat.matches:
+            if match.home == self:
+                buts += match.away_goals
+            elif match.away == self:
+                buts += match.home_goals
+        return buts
 
     def __str__(self):
         return f"{self.name}"
@@ -35,8 +44,6 @@ class Joueur():
         self.name = name
         self.poste = poste                               # son numéro au club, ainsi que ses stats qui regroupent les buts marqués                     # et la note attribuée par les journalistes sur ses performances
         self.stats = {'but': 0, 'note': 0}
-
-
 
     def add_goal(self):                     # Fonction qui améliore le compteur de but du joeur
         self.stats['but'] += 1                      # lorsque ce dernier marque
@@ -194,7 +201,7 @@ class Championnat():
             match.play_match(self)
 
 
-    def effectif(self):
+    def effectif(self, club):
         """
         permet, grace a la lecture d'un fichier texte, d'affecter a chaque equipe l'ensemble de ses joueurs avec
         leurs caracteristiques en faisant appel a la sous classe Joueur
@@ -206,29 +213,61 @@ class Championnat():
             effectif = equipes.strip().split(', ')
             if a%3==1:
                 for i in range(11):
-                    Club(name).add_player(Joueur(effectif[2 * i], effectif[2 * i + 1]))
-                self.clubs.update({name : 0})
+                    club(name).add_player(Joueur(effectif[2 * i], effectif[2 * i + 1]))
             elif a%3==0:
-                name=effectif[0]
-                Club(name)
+                name=effectif[0][:-1]
+                self.clubs.update({club(name) : 0})
             a+=1
         effectifs.close()
 
     def resultat(self):
         for cle, val in self.clubs.items():
-            self.classement.append((cle, val))
+            self.classement.append((cle.name, val))
         self.classement = sorted(self.classement, key=lambda x: x[1], reverse=True)
 
 
     def buts_marque(self):
         buts_m = []
-        # print(self.clubs)
-        for club, points in self.classement:
+        for club, _ in self.classement:
             for c in self.clubs:
-                if c == club:
-                    print(Club(c).players)
-                    buts_m.append(Club(c).buts_marques(self))
+                if club == c.name:
+                    buts_m.append(c.buts_marques(self))
         return buts_m
+
+    def buts_encaisses(self):
+        buts_m = []
+        for club, _ in self.classement:
+            for c in self.clubs:
+                if club == c.name:
+                    buts_m.append(c.buts_encaisses(self))
+        return buts_m
+
+    def vic_nul_def(self):
+        '''Renvoie trois listes, une pour le nombre de victoire, une pour matchs nuls et une pour les défaites. Le tout dans l'ordre du classement'''
+        vic = []
+        nul = []
+        defaite = []
+        for club, _ in self.classement:
+            v, n, d = 0, 0, 0
+            for m in self.matches:
+                if str(club) == str(m.home):
+                    if m.home_goals > m.away_goals:
+                        v += 1
+                    elif m.home_goals == m.away_goals:
+                        n += 1
+                    else:
+                        d += 1
+                elif str(club) == str(m.away):
+                    if m.away_goals > m.home_goals:
+                        v += 1
+                    elif m.away_goals == m.home_goals:
+                        n += 1
+                    else:
+                        d += 1
+            vic.append(v)
+            nul.append(n)
+            defaite.append(d)
+        return vic, nul, defaite
 
     def __str__(self):
         classement_str = ""

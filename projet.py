@@ -25,7 +25,7 @@ Championnat = ClassChamp.Championnat()
 
 
 # Modélisation des confrontations
-Championnat.effectif()
+Championnat.effectif(Club)
                                         # importe les clubs et leurs joueurs
 Championnat.generate_matches()          # On génère chacun des matchs entre ces différentes équipes, matchs allés d'abord puis match retours
 Championnat.play_matches()              # On modélise le résultat de chacun de ces matchs et donc du championnat
@@ -33,8 +33,8 @@ Championnat.resultat()
 
 
 # print(Championnat)                      # On affiche le resultat du championnat après le nombre de journées choisit
-# print(Championnat.resultat())                        # C'est à dire le classement final
-print(Championnat.buts_marque())
+# print(Championnat.classement)                        # C'est à dire le classement final
+
 
 # Création du calendrier
 debut_championnat = datetime.date(2023, 8, 6)  # Initialisation du début de championnat
@@ -50,3 +50,7 @@ calendrier = ClassChamp.Calendrier(debut_championnat, nb_journees, journees_par_
 #     calendrier.get_matchs_journee(journee)
 
 # print(Championnat.graphique_buts)
+
+print(Championnat.buts_marque())
+print(Championnat.buts_encaisses())
+print(Championnat.vic_nul_def())
