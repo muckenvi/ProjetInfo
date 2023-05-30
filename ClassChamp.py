@@ -304,7 +304,6 @@ class Calendrier():
         self.nb_journees = nb_journees
         self.journees_par_semaine = journees_par_semaine
         self.clubs = clubs
-        # self.matchs_par_jour = [[] for _ in range(self.nb_journees)]
         self.matchs_par_jour = {}
         self.championnat = championnat
         self.calculer_calendrier()
@@ -391,7 +390,6 @@ class Calendrier():
                                         break
                         equipes_jouees[equipe_adverse - 1] = True
             self.matchs_par_jour[jour+nb_jours] = matchs_jour
-
 
     def get_matchs_journee(self, journee):
         matchs = self.matchs_par_jour[journee-1]
