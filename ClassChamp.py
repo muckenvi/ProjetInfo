@@ -81,7 +81,7 @@ class Match():
         return goals
 
     def play_match(self,championnat):
-        home_score = self.simuler_buts(10)      # Nombre de buts marqués par l'équipe qui joue à domicile (compris entre 0 et 5)
+        home_score = self.simuler_buts(30)      # Nombre de buts marqués par l'équipe qui joue à domicile (compris entre 0 et 5)
         away_score = self.simuler_buts(1)      # Nombre de buts marqués par l'équipe qui joue à l'extérieur
         self.home_goals = home_score
         self.away_goals = away_score
