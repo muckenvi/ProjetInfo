@@ -1,5 +1,5 @@
 import sys
-
+import PyQt5
 from PyQt5.uic import loadUi
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import  QApplication,QMainWindow, QTableWidgetItem, QTableWidget
@@ -35,8 +35,8 @@ class Ligue1(QMainWindow):
         effectifs = open('Joueurs championnat.txt')
         self.remplir_table(self.clubs(effectifs))
 
-        self.insererImage(self.clubs(effectifs))
-
+        self.insererImage()
+        #self.insererLogoAleatoire()
 
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.resizeRowsToContents()
@@ -85,14 +85,25 @@ class Ligue1(QMainWindow):
     def commande(self):
         # Code exécuté lorsque le bouton est cliqué
         M=[]
-        L= projet.Championnat.resultat()
+        T=[]
+        L= projet.Championnat.classement
         for i in range(len(L)):
             M.append(L[i][0])
-        self.insererImage2(self.construire_liste_logos(L))
+            T.append(L[i][1])
+        #self.insererImage2(self.construire_liste_logos(L))
+        self.afficherLogosClubs(M,self.insererLogoAleatoire())
         self.DebutChampionnat(M)
+        self.remplircolonnes2(T)
         self.zonesEUROPE()
         self.zonesDESCENTE()
-        self.insererImage2(self.construire_liste_logos(L))
+        self.remplircolonnes456(projet.Championnat.vic_nul_def())
+        self.remplircolonnes7(projet.Championnat.buts_marque())
+        self.remplircolonnes8(projet.Championnat.buts_encaisses())
+        self.remplircolonnes9(projet.Championnat.buts_marque(),projet.Championnat.buts_encaisses())
+        self.zonesEUROPE()
+        self.zonesDESCENTE()
+
+
 
 
 
@@ -171,6 +182,74 @@ class Ligue1(QMainWindow):
             row+=1
 
 
+    def remplircolonnes2(self,M):
+        row=0
+        for stats in M:
+            item = QTableWidgetItem(str(stats))
+            self.tableWidget.setItem(row, 2, item)
+            item.setTextAlignment(Qt.AlignCenter)  # on parcours chaque ligne de la table en en sautant une
+            row += 1
+
+    def remplircolonnes3(self,M):
+        row=0
+        for stats in M:
+            item = QTableWidgetItem(str(stats))
+            self.tableWidget.setItem(row, 3, item)
+            item.setTextAlignment(Qt.AlignCenter)  # on parcours chaque ligne de la table en en sautant une
+            row += 1
+
+    def remplircolonnes456(self,M):
+        row=0
+        row2=0
+        row3=0
+        for L in M[0]:
+            item = QTableWidgetItem(str(L))
+            self.tableWidget.setItem(row, 4, item)
+            item.setTextAlignment(Qt.AlignCenter)  # on parcours chaque ligne de la table en en sautant une
+            row += 1
+
+        for k in M[1]:
+            item = QTableWidgetItem(str(k))
+            self.tableWidget.setItem(row2,5, item)
+            item.setTextAlignment(Qt.AlignCenter)  # on parcours chaque ligne de la table en en sautant une
+            row2 += 1
+
+        for m in M[2]:
+            item = QTableWidgetItem(str(m))
+            self.tableWidget.setItem(row3, 6, item)
+            item.setTextAlignment(Qt.AlignCenter)  # on parcours chaque ligne de la table en en sautant une
+            row3 += 1
+
+    def remplircolonnes7(self,M):
+        row=0
+        for stats in M:
+            item = QTableWidgetItem(str(stats))
+            self.tableWidget.setItem(row,7, item)
+            item.setTextAlignment(Qt.AlignCenter)  # on parcours chaque ligne de la table en en sautant une
+            row += 1
+
+    def remplircolonnes8(self,M):
+        row=0
+        for stats in M:
+            item = QTableWidgetItem(str(stats))
+            self.tableWidget.setItem(row, 8, item)
+            item.setTextAlignment(Qt.AlignCenter)  # on parcours chaque ligne de la table en en sautant une
+            row += 1
+
+
+    def remplircolonnes9(self,M,L):
+        row=0
+        difference=[]
+        for i in range(len(M)):
+            difference.append (M[i]-L[i])
+
+        for k in difference:
+            item = QTableWidgetItem(str(k))
+            self.tableWidget.setItem(row, 9, item)
+            item.setTextAlignment(Qt.AlignCenter)  # on parcours chaque ligne de la table en en sautant une
+            row += 1
+
+
 
 
 
@@ -216,19 +295,20 @@ class Ligue1(QMainWindow):
 
         return liste_logos
 
-    def insererImage(self,fichier):
+    def insererImage(self):
         dossier = "./Clubs"
         L=[]
-        for fichier in os.listdir(dossier):
-            chemin_fichier = os.path.join(dossier, fichier)
+        for club in os.listdir(dossier):
+            chemin_fichier = os.path.join(dossier, club)
             L.append(self.Def_image(chemin_fichier))
 
         row=0
-        for k in range(len(fichier)+2):
+        for k in range(len(L)):
 
             self.tableWidget.setCellWidget(row,0,L[k])
             row+=1
 
+        return L
     def insererImage2(self,fichier):
         L=[]
         for k in range(len(fichier)):
@@ -241,7 +321,27 @@ class Ligue1(QMainWindow):
             self.tableWidget.setCellWidget(row,0,L[k])
             row+=1
 
+    def afficherLogosClubs(self, clubs, logos):
+        dossier = "./Clubs"
 
+        for i, club in enumerate(clubs):
+            chemin_fichier = os.path.join(dossier, f"{club}.png")
+            pixmap = QPixmap(chemin_fichier)
+            logos[i].setPixmap(pixmap)
+
+    def insererLogoAleatoire(self):
+        dossier = "./Club"
+        L = []
+
+        for i in range(self.tableWidget.rowCount()):
+            chemin_fichier = os.path.join(dossier, f"logo{i + 1}.png")
+            pixmap = QPixmap(chemin_fichier)
+            label = QtWidgets.QLabel(self)
+            label.setPixmap(pixmap.scaled(100, 100))  # Ajuster la taille de l'image selon vos besoins
+            L.append(label)
+            self.tableWidget.setCellWidget(i, 0, label)
+
+        return L
 
 
 if __name__ == "__main__":

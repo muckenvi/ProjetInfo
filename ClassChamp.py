@@ -5,7 +5,7 @@ from typing import List
 from datetime import datetime, timedelta
 import pickle
 import matplotlib.pyplot as plt
-
+from math import exp, factorial
 
 class Club():
     def __init__(self, name):
@@ -62,9 +62,27 @@ class Match():
         self.home_goals = home_goals
         self.away_goals = away_goals
 
+    def poisson_prob(self,lmbda, k):
+        return (exp(-lmbda) * (lmbda ** k) )/ factorial(k)
+
+    def simuler_buts(self,lmbda):
+        goals = 0
+
+        # Simule le nombre de buts en générant des réalisations de la distribution de Poisson
+        while True:
+            prob = random.randint(0,2)
+            goal_prob = self.poisson_prob(lmbda, goals)
+
+            if prob <= goal_prob:
+                break
+            else:
+                goals += 1
+
+        return goals
+
     def play_match(self,championnat):
-        home_score = random.randint(0, 5)       # Nombre de buts marqués par l'équipe qui joue à domicile (compris entre 0 et 5)
-        away_score = random.randint(0, 5)       # Nombre de buts marqués par l'équipe qui joue à l'extérieur
+        home_score = self.simuler_buts(10)      # Nombre de buts marqués par l'équipe qui joue à domicile (compris entre 0 et 5)
+        away_score = self.simuler_buts(1)      # Nombre de buts marqués par l'équipe qui joue à l'extérieur
         self.home_goals = home_score
         self.away_goals = away_score
 
