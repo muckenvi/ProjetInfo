@@ -36,7 +36,6 @@ class Ligue1(QMainWindow):
         self.remplir_table(self.clubs(effectifs))
 
         self.insererImage()
-        #self.insererLogoAleatoire()
 
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.resizeRowsToContents()
@@ -55,6 +54,9 @@ class Ligue1(QMainWindow):
         self.zonesDESCENTE()
         self.pushButton.clicked.connect(self.commande)
 
+
+        self.line_edit = QtWidgets.QLineEdit(self)
+        self.line_edit.returnPressed.connect(self.update_table)
 
 
         palette = QtGui.QPalette()
@@ -96,6 +98,7 @@ class Ligue1(QMainWindow):
         self.remplircolonnes2(T)
         self.zonesEUROPE()
         self.zonesDESCENTE()
+        self.remplircolonnes3()
         self.remplircolonnes456(projet.Championnat.vic_nul_def())
         self.remplircolonnes7(projet.Championnat.buts_marque())
         self.remplircolonnes8(projet.Championnat.buts_encaisses())
@@ -111,6 +114,31 @@ class Ligue1(QMainWindow):
 
     def boutonclique(self):
         self.commande()
+
+    def update_table(self, text):
+        day = int(text)
+        D=[]
+        T=[]
+        L= projet.calendrier.classement_journee(int(day))
+        row = 0
+        row2=0
+        for i in range(len(L)):
+            D.append(L[i][0])
+            T.append([i][1])
+
+        for k in range(len(L)):
+            item = QTableWidgetItem(str(D[k]))
+            self.tableWidget.setItem(row, 1, item)
+            item.setTextAlignment(Qt.AlignCenter)  # on parcours chaque ligne de la table en en sautant une
+            row += 1
+
+        for p in range(len(L)):
+            item = QTableWidgetItem(str(T[p]))
+            self.tableWidget.setItem(row2, 2, item)
+            item.setTextAlignment(Qt.AlignCenter)  # on parcours chaque ligne de la table en en sautant une
+            row2 += 1
+
+
 
 
 
@@ -190,10 +218,10 @@ class Ligue1(QMainWindow):
             item.setTextAlignment(Qt.AlignCenter)  # on parcours chaque ligne de la table en en sautant une
             row += 1
 
-    def remplircolonnes3(self,M):
+    def remplircolonnes3(self):
         row=0
-        for stats in M:
-            item = QTableWidgetItem(str(stats))
+        for i in range(20):
+            item = QTableWidgetItem(str(38))
             self.tableWidget.setItem(row, 3, item)
             item.setTextAlignment(Qt.AlignCenter)  # on parcours chaque ligne de la table en en sautant une
             row += 1
