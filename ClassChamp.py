@@ -309,14 +309,26 @@ class Championnat():
         with open(fichier, 'rb') as f:
             return pickle.load(f)
 
-    def graphique_buts(self):
-        clubs = [club.name for club in self.clubs]
-        buts = [club.buts_marques for club in self.clubs]
-        fig, ax = plt.subplots()
-        ax.bar(clubs, buts)
-        ax.set_xlabel("Club")
-        ax.set_ylabel("Buts")
+    def graphique_buts(self, club):
+        """graphique de la répartition des buts pour un club"""
+        for c in self.clubs.keys():
+            if c.name == club:
+                joueurs = [j.name for j in c.players]
+                buts = [j.stats['but'] for j in c.players]
+                plt.pie(buts, labels=joueurs, autopct='%1.1f%%')
+                plt.title("Répartition des buts de " + c.name)
+                plt.show()
 
+    def meilleurs_buteurs(self):
+        joueurs = []
+        for c in self.clubs.keys():
+            joueurs += c.players
+        joueurs = sorted(joueurs, key=lambda x: x.stats['but'], reverse=True)
+        plt.bar([j.name for j in joueurs[:10]], [j.stats['but'] for j in joueurs[:10]])
+        plt.ylabel("Buts")
+        plt.xlabel("Joueurs")
+        plt.title("Meilleurs buteurs")
+        plt.show()
 
 class Calendrier():
     def __init__(self, debut: datetime, nb_journees: int, journees_par_semaine: int, clubs: List[str], championnat):
