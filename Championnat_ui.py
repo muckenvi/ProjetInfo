@@ -96,6 +96,7 @@ class Ligue1(QMainWindow):
         self.remplircolonnes2(T)
         self.zonesEUROPE()
         self.zonesDESCENTE()
+        self.remplircolonnes3()
         self.remplircolonnes456(projet.Championnat.vic_nul_def())
         self.remplircolonnes7(projet.Championnat.buts_marque())
         self.remplircolonnes8(projet.Championnat.buts_encaisses())
@@ -190,10 +191,10 @@ class Ligue1(QMainWindow):
             item.setTextAlignment(Qt.AlignCenter)  # on parcours chaque ligne de la table en en sautant une
             row += 1
 
-    def remplircolonnes3(self,M):
+    def remplircolonnes3(self):
         row=0
-        for stats in M:
-            item = QTableWidgetItem(str(stats))
+        for i in range(20):
+            item = QTableWidgetItem(str(38))
             self.tableWidget.setItem(row, 3, item)
             item.setTextAlignment(Qt.AlignCenter)  # on parcours chaque ligne de la table en en sautant une
             row += 1
