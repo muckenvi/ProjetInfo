@@ -51,6 +51,7 @@ calendrier = ClassChamp.Calendrier(debut_championnat, nb_journees, journees_par_
 
 # print(Championnat.graphique_buts)
 
-print(Championnat.buts_marque())
-print(Championnat.buts_encaisses())
-print(Championnat.vic_nul_def())
+# print(Championnat.buts_marque())
+# print(Championnat.buts_encaisses())
+# print(Championnat.vic_nul_def())
+# print(calendrier.classement_journee(1))

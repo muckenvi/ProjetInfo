@@ -401,3 +401,29 @@ class Calendrier():
     def get_date_journee(self, journee: int) -> str:
         journee_date = self.debut + timedelta(days=(journee-1)*7/self.journees_par_semaine)
         return journee_date.strftime("%Y-%m-%d")
+
+    def classement_journee(self, journee):
+        classement_j = {}
+        class_j = []
+        for m in self.matchs_par_jour[journee-1]:       # parcours des matchs du jour
+            for match in self.championnat.matches:      # parcours des matchs du championnat
+                if match.home == m[0] and match.away == m[1]:
+                    if match.home_goals > match.away_goals:                 # Attribution des points en cas de victoire de l'équipe extérieur ou à domicile
+                        if match.home.name not in classement_j:
+                            classement_j.update({match.home.name : 0})
+                        classement_j[match.home.name] += 3       # ou en cas de match nul
+                    elif match.home_goals < match.away_goals:
+                        if match.away.name not in classement_j:
+                            classement_j.update({match.away.name : 0})
+                        classement_j[match.away.name] += 3
+                    else:
+                        if match.home.name not in classement_j:
+                            classement_j.update({match.home.name : 0})
+                        if match.away.name not in classement_j:
+                            classement_j.update({match.away.name : 0})
+                        classement_j[match.home.name] += 1
+                        classement_j[match.away.name] += 1
+        for cle, val in classement_j.items():
+            class_j.append((cle, val))
+        class_j = sorted(class_j, key=lambda x: x[1], reverse=True)
+        return class_j
