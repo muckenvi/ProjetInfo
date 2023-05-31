@@ -27,18 +27,3 @@ debut_championnat = datetime.date(2023, 8, 6)  # Initialisation du début de cha
 nb_journees = 38
 journees_par_semaine = 1
 calendrier = ClassChamp.Calendrier(debut_championnat, nb_journees, journees_par_semaine, list(Championnat.clubs), Championnat) # Repartition des matchs selon les jours du calendrier
-
-
-
-# print("Calendrier de la Ligue 1 :")         #Affichage du détail des différentes journées avec les résultats jours par jours
-# for journee in range(1, nb_journees+1):
-#     print("\nJournée {} ({}) :".format(journee, calendrier.get_date_journee(journee)))
-#     calendrier.get_matchs_journee(journee)
-
-
-
-# Championnat.graphique_buts('Paris Saint-Germain')
-# Championnat.meilleurs_buteurs()
-# print(Championnat.buts_encaisses())
-# print(Championnat.vic_nul_def())
-print(calendrier.classement_journee(2))
