@@ -326,6 +326,24 @@ class Championnat():
         plt.title("Meilleurs buteurs")
         plt.show()
 
+    def classement_recursive(self, index=0):
+        """Renvoie le classement récursif du championnat"""
+        if index == len(self.classement):
+            return []
+
+        club, points = championnat.classement[index]
+        buts_marques = 0
+        buts_encaisses = 0
+
+        for c in championnat.clubs:
+            if c.name == club:
+                buts_marques = c.buts_marques(championnat)
+                buts_encaisses = c.buts_encaisses(championnat)
+                break
+
+        classement_recursif = classement_recursive(championnat, index + 1)
+        classement_recursif.append((club, points, buts_marques, buts_encaisses))
+        return classement_recursif
 
 class Calendrier():
     def __init__(self, debut: datetime, nb_journees: int, journees_par_semaine: int, clubs: List[str], championnat):
