@@ -5,14 +5,14 @@ import pickle
 import matplotlib.pyplot as plt
 from math import exp, factorial
 
-class Club():
+class Club(list):
     def __init__(self, name):
         self.name = name
-        self.players = []
+        self.note = 0
 
     def add_player(self,player):            # fonction pour ajouter des joueurs dans le club
         """Ajouter un objet Joueur et non un nom"""
-        self.players.append(player)
+        self.append(player)
 
     def buts_marques(self,championnat):
         """Retourne le nombre de buts marqués par le club au cours du championnat"""
@@ -53,6 +53,14 @@ class Joueur():
     def __str__(self):                              # Représentation du joueur sous forme de caractère (Nom + poste + stats)
         return f"{self.name}  poste:{self.poste} stats : {self.stats}"
 
+    def __hash__(self):
+        return hash(self.name)
+
+    def __eq__(self, other):
+        if isinstance(other, Club):
+            return self.name == other.name
+        return False
+
 
 class Match():
     def __init__(self, home, away, home_goals=0, away_goals=0):
@@ -82,24 +90,24 @@ class Match():
         self.home_goals = home_score
         self.away_goals = away_score
         if home_score > away_score:                 # Attribution des points en cas de victoire de l'équipe extérieur ou à domicile
-            championnat.clubs[self.home] += 3
+            championnat.clubs[self.home.name].note += 3
         elif home_score < away_score:
-            championnat.clubs[self.away] += 3
+            championnat.clubs[self.away.name].note += 3
         else:
-            championnat.clubs[self.home] += 1       # ou en cas de match nul
-            championnat.clubs[self.away] += 1
+            championnat.clubs[self.home.name].note += 1       # ou en cas de match nul
+            championnat.clubs[self.away.name].note += 1
         self.attributionNote()
         self.attribuer_buteurs()
 
     def attributionNote(self):          # Attribution de notes aux joueurs en fonction de leurs performances
-        home_attaquant = [joueur for joueur in self.home.players if joueur.poste == 'Attaquant']        # séparation en fonction de leur poste et de leur équipe
-        away_attaquant = [joueur for joueur in self.away.players if joueur.poste == 'Attaquant']
-        home_milieu = [joueur for joueur in self.home.players if joueur.poste == 'Milieu']
-        away_milieu = [joueur for joueur in self.away.players if joueur.poste == 'Milieu']
-        home_defenseur = [joueur for joueur in self.home.players if joueur.poste == 'Defenseur']
-        away_defenseur = [joueur for joueur in self.away.players if joueur.poste == 'Defenseur']
-        home_gardien = [joueur for joueur in self.home.players if joueur.poste == 'Gardien']
-        away_gardien = [joueur for joueur in self.away.players if joueur.poste == 'Gardien']
+        home_attaquant = [joueur for joueur in self.home if joueur.poste == 'Attaquant']        # séparation en fonction de leur poste et de leur équipe
+        away_attaquant = [joueur for joueur in self.away if joueur.poste == 'Attaquant']
+        home_milieu = [joueur for joueur in self.home if joueur.poste == 'Milieu']
+        away_milieu = [joueur for joueur in self.away if joueur.poste == 'Milieu']
+        home_defenseur = [joueur for joueur in self.home if joueur.poste == 'Defenseur']
+        away_defenseur = [joueur for joueur in self.away if joueur.poste == 'Defenseur']
+        home_gardien = [joueur for joueur in self.home if joueur.poste == 'Gardien']
+        away_gardien = [joueur for joueur in self.away if joueur.poste == 'Gardien']
         note_min = 4
         note_max = 7
         for joueur in home_attaquant:
@@ -123,20 +131,20 @@ class Match():
                 elif self.home_goals <= 1:
                     note_min -= 1
                     note_max -= 1
-            for j in self.home.players:         # attribution de la note au joueur en question
+            for j in self.home:         # attribution de la note au joueur en question
                 if j == joueur:
                     j.add_note(random.randint(note_min, note_max))
 
     def attribuer_buteurs(self):
         """Attribue aléatoirement des buts aux attaquants de chaque club s'ils ont marqué ou non lors de chaque match"""
-        home_attaquant = [joueur for joueur in self.home.players if joueur.poste == 'Attaquant']
-        away_attaquant = [joueur for joueur in self.away.players if joueur.poste == 'Attaquant']
-        home_milieu = [joueur for joueur in self.home.players if joueur.poste == 'Milieu']
-        away_milieu = [joueur for joueur in self.away.players if joueur.poste == 'Milieu']
-        home_defenseur = [joueur for joueur in self.home.players if joueur.poste == 'Defenseur']
-        away_defenseur = [joueur for joueur in self.away.players if joueur.poste == 'Defenseur']
-        home_gardien = [joueur for joueur in self.home.players if joueur.poste == 'Gardien']
-        away_gardien = [joueur for joueur in self.away.players if joueur.poste == 'Gardien']
+        home_attaquant = [joueur for joueur in self.home if joueur.poste == 'Attaquant']
+        away_attaquant = [joueur for joueur in self.away if joueur.poste == 'Attaquant']
+        home_milieu = [joueur for joueur in self.home if joueur.poste == 'Milieu']
+        away_milieu = [joueur for joueur in self.away if joueur.poste == 'Milieu']
+        home_defenseur = [joueur for joueur in self.home if joueur.poste == 'Defenseur']
+        away_defenseur = [joueur for joueur in self.away if joueur.poste == 'Defenseur']
+        home_gardien = [joueur for joueur in self.home if joueur.poste == 'Gardien']
+        away_gardien = [joueur for joueur in self.away if joueur.poste == 'Gardien']
         # Proba attaquants
         buts_h = 0
         buts_a = 0
@@ -191,7 +199,7 @@ class Championnat():
         self.classement = []
 
     def generate_matches(self):         # On génère les matchs pour faire en sorte que chaque équipe rencontre exactement deux fois les autres équipes du championnat (extérieure et domicile)
-        c = list(self.clubs)
+        c = list(self.clubs.values())
         for i in range(len(c)):         # On réalise donc une double boucle for pour faire cela en tenant compte des indices
             for j in range(i+1, len(c)):    # Pour éviter d'avoir des doublons
                 match_aller = Match(c[i], c[j])
@@ -216,18 +224,19 @@ class Championnat():
             effectif = equipes.strip().split(', ')
             if a%3==1:                              # lignes correspondant aux joueurs
                 for i in range(11):
-                    for cle in self.clubs.keys():
+                    for cle in self.clubs.values():
                         if cle.name == name:
                             cle.add_player(Joueur(effectif[2 * i], effectif[2 * i + 1]))
             elif a%3==0:                            # lignes correspondants aux noms de clubs
                 name=effectif[0][:-1]
-                self.clubs.update({self.Club(name) : 0})
+                c = self.Club(name)
+                self.clubs[c.name] = c
             a+=1
         effectifs.close()
 
     def resultat(self):         # calcul du résultat du championnat
         for cle, val in self.clubs.items():
-            self.classement.append((cle.name, val))
+            self.classement.append((cle, val.note))
         self.classement = sorted(self.classement, key=lambda x: x[1], reverse=True)
 
 
@@ -235,18 +244,18 @@ class Championnat():
         '''Renvoie une liste de nombre de buts marqués par équipe dans l'ordre du classement'''
         buts_m = []
         for club, _ in self.classement:
-            for c in self.clubs:
-                if club == c.name:
-                    buts_m.append(c.buts_marques(self))
+            for cle, val in self.clubs.items():
+                if club == cle:
+                    buts_m.append(val.buts_marques(self))
         return buts_m
 
     def buts_encaisses(self):
         '''Renvoie une liste de nombre de buts encaissés par équipe dans l'ordre du classement'''
         buts_m = []
         for club, _ in self.classement:
-            for c in self.clubs:
-                if club == c.name:
-                    buts_m.append(c.buts_encaisses(self))
+            for cle, val in self.clubs.items():
+                if club == cle:
+                    buts_m.append(val.buts_encaisses(self))
         return buts_m
 
     def vic_nul_def(self):
@@ -297,10 +306,10 @@ class Championnat():
 
     def graphique_buts(self, club):
         """graphique de la répartition des buts pour un club"""
-        for c in self.clubs.keys():
+        for c in self.clubs.values():
             if c.name == club:
-                joueurs = [j.name for j in c.players]
-                buts = [j.stats['but'] for j in c.players]
+                joueurs = [j.name for j in c]
+                buts = [j.stats['but'] for j in c]
                 plt.pie(buts, labels=joueurs, autopct='%d')     # diagramme camembert
                 plt.title("Répartition des buts de " + c.name)
                 plt.show()
@@ -308,8 +317,8 @@ class Championnat():
     def meilleurs_buteurs(self):
         """Classement des 10 meilleurs buteurs du championnat"""
         joueurs = []
-        for c in self.clubs.keys():
-            joueurs += c.players
+        for c in self.clubs.values():
+            joueurs += c
         joueurs = sorted(joueurs, key=lambda x: x.stats['but'], reverse=True)
         plt.bar([j.name for j in joueurs[:10]], [j.stats['but'] for j in joueurs[:10]])     # diagramme batons
         plt.ylabel("Buts")

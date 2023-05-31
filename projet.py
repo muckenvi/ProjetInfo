@@ -9,7 +9,6 @@ Joueur = ClassChamp.Joueur
 Match = ClassChamp.Match
 Championnat = ClassChamp.Championnat(Club)
 
-
 # Modélisation des confrontations
 Championnat.effectif()
                                         # importe les clubs et leurs joueurs
