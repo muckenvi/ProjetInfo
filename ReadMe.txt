@@ -16,4 +16,5 @@ buts_marques = championnat.buts_marque()
 buts_encaisses = championnat.buts_encaisse()
 VICTOIRENULDEFAITE = championnat.vic_nul_defaite()                      # retourne une liste de listes avec les victoires, nuls et défaites associés au club lors de la fin du championnat
 classement_jour = ClassChamp.Calendrier.classement_journee(journee)     # retourne le classement au bout de journee jours. Journee est un entier commencant à 1
-
+Championnat.graphique_buts('Paris Saint Germain')                       # affiche la répartition des buts pour un club, club à rentrer en chaine de caractère correspondant à son nom
+Championnat.meilleurs_buteurs()                                         # affiche le graphique des 10 meilleurs buteurs du championnat
