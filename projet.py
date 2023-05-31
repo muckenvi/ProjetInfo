@@ -2,30 +2,16 @@ import ClassChamp
 import datetime
 import matplotlib.pyplot as plt
 
-''' A FAIRE:
-- héritage entre les classes, chiant il va falloir modifier des trucs
-- héritage depuis un type déjà existant, genre List
-- commentaires
-- tests : au moins 4 méthodes avec 2 cas par méthode
 
-- Vérifier que si un club remporte un match, alors il a marqué plus de buts que l’adversaire
-- Vérifier que le nombre de points distribués lors d’une journée est compris entre 2 et 3 fois le nombre de matchs
-- Vérifier que le nombre de matchs joués par journée est égal au nombre de clubs/2
-- Sauvegarde : Votre modèle de championnat devra pouvoir être sauvé et relu depuis un fichier
-- Choix d’une journée particulière : scores, notes des joueurs, etc
-- Choix d’une journée pour le championnat en cours : classement des clubs, nombre de matchs gagnés/nuls/perdus par club, nombre de buts marqués/encaissés par club
-- faire des analyses sur les stats des clubs ou joueurs
-'''
-
-#création des classes contenues dans le fichier ClassChamp.py
+# création des classes contenues dans le fichier ClassChamp.py
 Club = ClassChamp.Club
 Joueur = ClassChamp.Joueur
 Match = ClassChamp.Match
-Championnat = ClassChamp.Championnat()
+Championnat = ClassChamp.Championnat(Club)
 
 
 # Modélisation des confrontations
-Championnat.effectif(Club)
+Championnat.effectif()
                                         # importe les clubs et leurs joueurs
 Championnat.generate_matches()          # On génère chacun des matchs entre ces différentes équipes, matchs allés d'abord puis match retours
 Championnat.play_matches()              # On modélise le résultat de chacun de ces matchs et donc du championnat
@@ -33,7 +19,7 @@ Championnat.resultat()
 
 
 # print(Championnat)                      # On affiche le resultat du championnat après le nombre de journées choisit
-# print(Championnat.classement)                        # C'est à dire le classement final
+# print(Championnat.classement)         # C'est à dire le classement final
 
 
 # Création du calendrier
@@ -49,7 +35,7 @@ calendrier = ClassChamp.Calendrier(debut_championnat, nb_journees, journees_par_
 #     print("\nJournée {} ({}) :".format(journee, calendrier.get_date_journee(journee)))
 #     calendrier.get_matchs_journee(journee)
 
-# print(Championnat.graphique_buts)
+
 
 # print(Championnat.buts_marque())
 # print(Championnat.buts_encaisses())
