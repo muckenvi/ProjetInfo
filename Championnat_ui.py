@@ -54,6 +54,7 @@ class Ligue1(QMainWindow):
         self.zonesEUROPE()
         self.zonesDESCENTE()
         self.pushButton.clicked.connect(self.commande)
+        self.pushButton_2.clicked.connect(self.command)
 
 
         self.line_edit = QtWidgets.QLineEdit(self)
@@ -95,7 +96,7 @@ class Ligue1(QMainWindow):
         for i in range(len(L)):
             M.append(L[i][0])           #On créer une liste avec le nom des clubs à la fin du championnat, qui sont classés
             T.append(L[i][1])           # On récupère les points associés
-        #self.insererImage2(self.construire_liste_logos(L))
+
         self.afficherLogosClubs(M,self.insererLogoAleatoire())
         self.DebutChampionnat(M)
         self.remplircolonnes2(T)
@@ -110,13 +111,19 @@ class Ligue1(QMainWindow):
         self.zonesDESCENTE()
 
 
+    def get_line_edit_value(self):
+        valeur = self.line_edit.text()
+        return str(valeur)
 
-
-
+    def command(self):
+        self.update_table(self.get_line_edit_value())
 
 
     def boutonclique(self):
         self.commande()
+
+    def boutonclique2(self):
+        self.command()
 
     def update_table(self, text):
         """Permet de mettre à jour la table selon la journée que l'on regarde. L'argument prit en entrée et le numéro de la journée"""
