@@ -437,7 +437,10 @@ class Calendrier():
     def classement_journee(self, journee):
         classement_j = {}
         class_j = []
-        for m in self.matchs_par_jour[journee-1]:       # parcours des matchs du jour
+        matchs = []
+        for j in range(journee):
+            matchs += self.matchs_par_jour[j]
+        for m in matchs:       # parcours des matchs jusqu'au jour souhaité
             for match in self.championnat.matches:      # parcours des matchs du championnat
                 if match.home == m[0] and match.away == m[1]:
                     if match.home_goals > match.away_goals:                 # Attribution des points en cas de victoire de l'équipe extérieur ou à domicile

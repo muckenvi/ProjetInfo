@@ -37,8 +37,8 @@ calendrier = ClassChamp.Calendrier(debut_championnat, nb_journees, journees_par_
 
 
 
-Championnat.graphique_buts('Paris Saint-Germain')
-Championnat.meilleurs_buteurs()
+# Championnat.graphique_buts('Paris Saint-Germain')
+# Championnat.meilleurs_buteurs()
 # print(Championnat.buts_encaisses())
 # print(Championnat.vic_nul_def())
-# print(calendrier.classement_journee(1))
+print(calendrier.classement_journee(2))
