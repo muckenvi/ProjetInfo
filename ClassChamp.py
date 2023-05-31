@@ -327,7 +327,8 @@ class Championnat():
         plt.show()
 
     def classement_recursive(self, index=0):
-        """Renvoie le classement récursif du championnat"""
+        """Fonction de base qui aurait permis de renvoyer le classement
+        du championnat de manière récursive"""
         if index == len(self.classement):
             return []
 
@@ -335,7 +336,7 @@ class Championnat():
         buts_marques = 0
         buts_encaisses = 0
 
-        for c in championnat.clubs:
+        for c in self.clubs:
             if c.name == club:
                 buts_marques = c.buts_marques(championnat)
                 buts_encaisses = c.buts_encaisses(championnat)
