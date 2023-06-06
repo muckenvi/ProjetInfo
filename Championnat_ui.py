@@ -54,7 +54,7 @@ class Ligue1(QMainWindow):
         self.zonesEUROPE()
         self.zonesDESCENTE()
         self.pushButton.clicked.connect(self.commande)
-        self.pushButton_2.clicked.connect(self.command)
+        #self.pushButton_2.clicked.connect(self.command)
 
 
         self.line_edit = QtWidgets.QLineEdit(self)
