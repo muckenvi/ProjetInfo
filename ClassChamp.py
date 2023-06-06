@@ -37,6 +37,13 @@ class Club(list):
     def __str__(self):
         return f"{self.name}"
 
+    def __hash__(self):
+        return hash(self.name)
+
+    def __eq__(self, other):
+        if isinstance(other, Club):
+            return self.name == other.name
+        return False
 
 class Joueur():
     def __init__(self, name,poste):             # On définit les variables d'instances telles que le nom du joueur
@@ -52,14 +59,6 @@ class Joueur():
 
     def __str__(self):                              # Représentation du joueur sous forme de caractère (Nom + poste + stats)
         return f"{self.name}  poste:{self.poste} stats : {self.stats}"
-
-    def __hash__(self):
-        return hash(self.name)
-
-    def __eq__(self, other):
-        if isinstance(other, Club):
-            return self.name == other.name
-        return False
 
 
 class Match():

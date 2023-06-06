@@ -17,7 +17,7 @@ Championnat.play_matches()              # On modélise le résultat de chacun de
 Championnat.resultat()
 
 
-# print(Championnat)                      # On affiche le resultat du championnat après le nombre de journées choisit
+print(Championnat)                      # On affiche le resultat du championnat après le nombre de journées choisit
 # print(Championnat.classement)         # C'est à dire le classement final
 
 
@@ -26,3 +26,8 @@ debut_championnat = datetime.date(2023, 8, 6)  # Initialisation du début de cha
 nb_journees = 38
 journees_par_semaine = 1
 calendrier = ClassChamp.Calendrier(debut_championnat, nb_journees, journees_par_semaine, list(Championnat.clubs), Championnat) # Repartition des matchs selon les jours du calendrier
+
+Championnat.graphique_buts('Stade Brestois 29')
+Championnat.meilleurs_buteurs()
+print(calendrier.classement_journee(2))
+print(Championnat.vic_nul_def())
