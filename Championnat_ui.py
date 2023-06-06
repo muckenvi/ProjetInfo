@@ -41,6 +41,7 @@ class Ligue1(QMainWindow):
         self.tableWidget.resizeRowsToContents()
         self.tableWidget.setColumnCount(10)
         self.tableWidget.setRowCount(20)
+        #Permet de renommer les colonnes du tableau
         self.rename_column(3,"Journée")
         self.rename_column(4, "Victoires")
         self.rename_column(5, "Nuls")
@@ -53,6 +54,7 @@ class Ligue1(QMainWindow):
         self.zonesEUROPE()
         self.zonesDESCENTE()
         self.pushButton.clicked.connect(self.commande)
+        self.pushButton_2.clicked.connect(self.command)
 
 
         self.line_edit = QtWidgets.QLineEdit(self)
@@ -85,14 +87,16 @@ class Ligue1(QMainWindow):
 
 
     def commande(self):
-        # Code exécuté lorsque le bouton est cliqué
+        """Code exécuté lorsque le bouton est cliqué, c'est à dire qu'on fait appel à nos classes et méthodes du fichier ClassChamp et projet
+        afin de lancer le championnat et de récupérer les informations pour pouvoir alimenter notre tableau avec
+        ces données"""
         M=[]
         T=[]
         L= projet.Championnat.classement
         for i in range(len(L)):
-            M.append(L[i][0])
-            T.append(L[i][1])
-        #self.insererImage2(self.construire_liste_logos(L))
+            M.append(L[i][0])           #On créer une liste avec le nom des clubs à la fin du championnat, qui sont classés
+            T.append(L[i][1])           # On récupère les points associés
+
         self.afficherLogosClubs(M,self.insererLogoAleatoire())
         self.DebutChampionnat(M)
         self.remplircolonnes2(T)
@@ -107,15 +111,22 @@ class Ligue1(QMainWindow):
         self.zonesDESCENTE()
 
 
+    def get_line_edit_value(self):
+        valeur = self.line_edit.text()
+        return str(valeur)
 
-
-
+    def command(self):
+        self.update_table(self.get_line_edit_value())
 
 
     def boutonclique(self):
         self.commande()
 
+    def boutonclique2(self):
+        self.command()
+
     def update_table(self, text):
+        """Permet de mettre à jour la table selon la journée que l'on regarde. L'argument prit en entrée et le numéro de la journée"""
         day = int(text)
         D=[]
         T=[]
@@ -129,13 +140,13 @@ class Ligue1(QMainWindow):
         for k in range(len(L)):
             item = QTableWidgetItem(str(D[k]))
             self.tableWidget.setItem(row, 1, item)
-            item.setTextAlignment(Qt.AlignCenter)  # on parcours chaque ligne de la table en en sautant une
+            item.setTextAlignment(Qt.AlignCenter)
             row += 1
 
         for p in range(len(L)):
             item = QTableWidgetItem(str(T[p]))
             self.tableWidget.setItem(row2, 2, item)
-            item.setTextAlignment(Qt.AlignCenter)  # on parcours chaque ligne de la table en en sautant une
+            item.setTextAlignment(Qt.AlignCenter)
             row2 += 1
 
 
@@ -143,15 +154,17 @@ class Ligue1(QMainWindow):
 
 
     def rename_column(self, column_index, new_name):
+        """Permet de renommer une colonne"""
         header_item = QTableWidgetItem(new_name)
         self.tableWidget.setHorizontalHeaderItem(column_index, header_item)
 
     def clubs(self,fichier):
+        """Ontraite le fichier texte pour avoir une liste uniquement avec les clubs"""
         C=[]
         a = 0
         for equipes in fichier:
-            effectif = equipes.strip().split(', ')      #Ontraite le fichier texte pour avoir une liste uniquement avec les
-            if a % 3 == 0:                              #clubs
+            effectif = equipes.strip().split(', ')
+            if a % 3 == 0:
                 name = effectif[0]
                 C.append(name)
             a += 1
@@ -163,6 +176,8 @@ class Ligue1(QMainWindow):
                              #on fait appel à notre fonction remplir_table qui permet de rentrer
 
     def init_table_with_zeros(self):
+        """Permet d'initialiser la table et toutes les cellules avec des 0 pour permettre le remplissage de celle-ci lorsqu'on appuie
+        sur le boutton Lancer Championnat """
         rows = self.tableWidget.rowCount()
         cols = self.tableWidget.columnCount()
 
@@ -211,6 +226,7 @@ class Ligue1(QMainWindow):
 
 
     def remplircolonnes2(self,M):
+        """Permet de remplir la colonne 2 renseignant le nombre de points de chaque clubs au bout de 38 journées """
         row=0
         for stats in M:
             item = QTableWidgetItem(str(stats))
@@ -219,6 +235,8 @@ class Ligue1(QMainWindow):
             row += 1
 
     def remplircolonnes3(self):
+        """Permet d'initialiser la colonne 3 (Journée) à la 38 ème journée, c'est à dire la fin
+        du championnat"""
         row=0
         for i in range(20):
             item = QTableWidgetItem(str(38))
@@ -227,6 +245,9 @@ class Ligue1(QMainWindow):
             row += 1
 
     def remplircolonnes456(self,M):
+        """Permet de remplir la colonne 4,5,6 selon la liste de liste reçu en argument
+         et contenant le nombre de victoires, nuls et défaites de chaque club triés selon le classement de ces
+         derniers à la dernières journée"""
         row=0
         row2=0
         row3=0
@@ -249,6 +270,7 @@ class Ligue1(QMainWindow):
             row3 += 1
 
     def remplircolonnes7(self,M):
+        """Permet de remplir la colonne 7 selon les buts marqués lors du championnat"""
         row=0
         for stats in M:
             item = QTableWidgetItem(str(stats))
@@ -257,6 +279,7 @@ class Ligue1(QMainWindow):
             row += 1
 
     def remplircolonnes8(self,M):
+        """Permet de remplir la colonne 8 selon les buts encaissés lors du championnat"""
         row=0
         for stats in M:
             item = QTableWidgetItem(str(stats))
@@ -266,6 +289,7 @@ class Ligue1(QMainWindow):
 
 
     def remplircolonnes9(self,M,L):
+        """Permet de remplir la colonne 9 selon les buts marqués et encaissés lors du championnat"""
         row=0
         difference=[]
         for i in range(len(M)):
@@ -285,6 +309,7 @@ class Ligue1(QMainWindow):
 
 
     def remplir_table(self, fichier):
+        """Permet de remplir la colonne des noms des équipes en prenant en argument la liste du classement final"""
         # Récupérer le nombre de lignes et de colonnes de la table
         num_lignes = len(fichier)
         num_cols = 3
@@ -350,6 +375,8 @@ class Ligue1(QMainWindow):
             row+=1
 
     def afficherLogosClubs(self, clubs, logos):
+        """Permet de récupérer le chemin du logo de chaque club et de l'insérer
+        sous le bon format pour afficher le logo correspondant au club dans le classement"""
         dossier = "./Clubs"
 
         for i, club in enumerate(clubs):
@@ -357,7 +384,9 @@ class Ligue1(QMainWindow):
             pixmap = QPixmap(chemin_fichier)
             logos[i].setPixmap(pixmap)
 
+
     def insererLogoAleatoire(self):
+        """Initialisation de afficherLogoClubs"""
         dossier = "./Club"
         L = []
 
@@ -365,7 +394,7 @@ class Ligue1(QMainWindow):
             chemin_fichier = os.path.join(dossier, f"logo{i + 1}.png")
             pixmap = QPixmap(chemin_fichier)
             label = QtWidgets.QLabel(self)
-            label.setPixmap(pixmap.scaled(100, 100))  # Ajuster la taille de l'image selon vos besoins
+            label.setPixmap(pixmap.scaled(100, 100))
             L.append(label)
             self.tableWidget.setCellWidget(i, 0, label)
 
